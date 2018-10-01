@@ -4,7 +4,9 @@
   "description": "Metallica page",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nf start",
+    "backend": "nodemon backend/bin/server",
+    "frontend": "parcel frontend/src/index.html"
   },
   "author": "Pawel Gozdz",
   "license": "ISC"

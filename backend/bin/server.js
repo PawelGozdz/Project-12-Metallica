@@ -16,9 +16,9 @@ server.httpServer = http.createServer((req, res) => {
 // dataLib.createFile('metallicadb', 'faq', { 'head.desc': 'What we offer', 'head.title': 'Music and much more' }, (text, data = '') => {
 //   console.log(text, data);
 // });
-dataLib.createDB('metallicadb', 'about', { variable: 'head.title', text: 'Our Products', 'pageId': 2, 'sectionId': 2 }, (text, data = '') => {
-  console.log(text, data);
-});
+// dataLib.createDB('metallicadb', 'about', { variable: 'head.title', text: 'Our Products', 'pageId': 2, 'sectionId': 2 }, (text, data = '') => {
+//   console.log(text, data);
+// });
 // dataLib.readFromFile('metallicadb', 'index', (text, data = '') => {
 //   console.log(text, data);
 // });
@@ -28,7 +28,7 @@ dataLib.createDB('metallicadb', 'about', { variable: 'head.title', text: 'Our Pr
 // dataLib.updateFile('metallicadb', 'index', { 'head.desc': 'New Metallica website', 'head.title': 'Check our new website' }, (text, data = '') => {
 //   console.log(text, data);
 // });
-// dataLib.updateDB('metallicadb', 'index', { 'head.desc': 'New Metallica website', 'head.title': 'Check our new website', 'hero.main-heading': 'MetallicA', 'hero.sub-heading': 'Best Metal band ever!!' }, (text, data = '') => {
+// dataLib.updateDB('metallicadb', 'index', { variable: 'head.title', text: 'Our Products', 'pageId': 2, 'sectionId': 2 }, (text, data = '') => {
 //   console.log(text, data);
 // });
 // dataLib.deleteFile('metallicadb', 'faq', (text, data = '') => {
