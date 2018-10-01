@@ -1,7 +1,10 @@
 const http = require('http');
 const url = require('url');
 const { StringDecoder } = require('string_decoder');
-const handlers = require('./handlers');
+const handlers = require('../app/lib/handlers');
+const config = require('../secret/config');
+const helpers = require('../app/lib/helpers');
+const dataLib = require('../app/lib/data');
 
 const server = {};
 
@@ -9,6 +12,33 @@ server.httpServer = http.createServer((req, res) => {
   server.unifiedServer(req, res);
 });
 
+// Testowanie CRUD
+// dataLib.createFile('metallicadb', 'faq', { 'head.desc': 'What we offer', 'head.title': 'Music and much more' }, (text, data = '') => {
+//   console.log(text, data);
+// });
+dataLib.createDB('metallicadb', 'about', { variable: 'head.title', text: 'Our Products', 'pageId': 2, 'sectionId': 2 }, (text, data = '') => {
+  console.log(text, data);
+});
+// dataLib.readFromFile('metallicadb', 'index', (text, data = '') => {
+//   console.log(text, data);
+// });
+// dataLib.readFromDB('metallicadb', 'index', (text, data = '') => {
+//   console.log(text, data);
+// });
+// dataLib.updateFile('metallicadb', 'index', { 'head.desc': 'New Metallica website', 'head.title': 'Check our new website' }, (text, data = '') => {
+//   console.log(text, data);
+// });
+// dataLib.updateDB('metallicadb', 'index', { 'head.desc': 'New Metallica website', 'head.title': 'Check our new website', 'hero.main-heading': 'MetallicA', 'hero.sub-heading': 'Best Metal band ever!!' }, (text, data = '') => {
+//   console.log(text, data);
+// });
+// dataLib.deleteFile('metallicadb', 'faq', (text, data = '') => {
+//   console.log(text, data);
+// });
+// dataLib.deleteDB('metallicadb', 'faq', (text, data = '') => {
+//   console.log(text, data);
+// });
+
+// console.log(dataLib);
 // Logika dla servera
 server.unifiedServer = (req, res) => {
   // Parsowanie URL
@@ -46,7 +76,7 @@ server.unifiedServer = (req, res) => {
       queryStringObject,
       method,
       headers,
-      payload: buffer
+      payload: helpers.parseJsonToObject(buffer)
     };
 
     // Przekierowanie requesta do handlera znajdujacego sie w obiekcie router
@@ -83,12 +113,12 @@ server.unifiedServer = (req, res) => {
 
 // Routery
 server.router = {
-  // '': index
+  '': handlers.index
 };
 
 server.init = () => {
-  server.httpServer.listen(3000, () => {
-    console.log('The server is listening on port 3000');
+  server.httpServer.listen(config.httpPort, () => {
+    console.log(`The server is listening on port ${config.httpPort} in ${config.envName} mode.`);
   });
 };
 

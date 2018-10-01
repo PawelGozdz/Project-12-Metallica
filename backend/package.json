@@ -2,10 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Metallica page backend",
-  "main": "index.js",
+  "main": "./app/index.js",
   "scripts": {
-    "start": "nodemon ./app/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/server",
+    "dev": "nodemon ./bin/server",
+    "configure": ".\\bin\\configure_db.sh"
   },
   "author": "Pawel Gozdz",
   "license": "ISC",
