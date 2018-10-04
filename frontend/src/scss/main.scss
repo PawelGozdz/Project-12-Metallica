@@ -1,1 +1,21 @@
-@import './page';
+// Abstracts
+@import "./abstracts/variables";
+@import "./abstracts/mixins";
+
+// Fonts
+@import "./fonts/fonts.css";
+
+// Components
+@import './components/navigation';
+@import './components/hero';
+
+// Pages
+@import './pages/index';
+@import './pages/page';
+
+// Configuration
+// @import "~font-awesome/css/font-awesome.css";
+// @import './configurations/normalize';
+@import "~bootstrap/scss/bootstrap";
+@import "./configurations/typography";
+@import './configurations/custom';

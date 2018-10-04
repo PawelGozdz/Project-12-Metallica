@@ -1,0 +1,18 @@
+// Laoyout
+.wrapper {
+  width: 100%;
+}
+
+// Base
+ul {
+  list-style-type: none;
+}
+
+// Anchor
+a {
+  color: $white;
+
+  &:hover {
+    color: darken($white, 50%);
+  }
+}

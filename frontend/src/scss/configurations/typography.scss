@@ -1,0 +1,32 @@
+.metallica {
+  font-family: 'Metal Mania' !important;
+}
+
+html {
+  //font-size: 62.5%; // 1rem = 10px; 10px/16px = 62.5%s
+  font-family: 'Open Sans Condensed', sans-serif;
+  
+  @include respond(phone) {
+    font-size: 92%;
+  }
+  
+  @include respond(tab-port) {
+    font-size: 97%; // 1rem = 8px; 8/16 = 50%
+  }
+  @include respond(tab-land) {
+    font-size: 110%; // 1rem = 9px; 9/16 = 56.5%
+  }
+  @include respond(laptop) {
+    font-size: 130%; // 1rem = 10; 10/16 = 62.5%
+  }
+  @include respond(big-laptop) {
+    font-size: 130%; // 1rem = 10; 10/16 = 62.5%
+  }
+}
+
+.heading {
+
+  &--main {
+    
+  }
+}

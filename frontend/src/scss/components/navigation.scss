@@ -1,0 +1,27 @@
+.navigation {
+  background: transparent;
+  position: fixed;
+  width: 100%;
+  padding: 0 $sp-3;
+
+  .metallica { font-size: 1.3rem; display: block;} 
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+  }
+  
+  &__item {
+    margin: 0 $sp-2;
+    padding: $sp-1 0;
+
+    &:last-child {
+      margin-left: auto;
+    }
+  } 
+  &__link {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}

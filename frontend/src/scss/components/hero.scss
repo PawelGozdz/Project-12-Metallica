@@ -1,0 +1,11 @@
+.hero {
+  height: 100vh;
+  background-image: url('../img/metallica-stage.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  &__list {
+    display: flex;
+  }
+}

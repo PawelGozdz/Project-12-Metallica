@@ -1,0 +1,36 @@
+// Spaces
+// margins / paddings
+$sp-1: 0.4rem;
+$sp-2: 1rem;
+$sp-3: 1.6rem;
+$sp-4: 2.4rem;  
+$sp-5: 3.6rem;
+$sp-6: 4.8rem;
+
+// Width
+$width-full: 100%;
+$container: 1200px;
+
+// Bootstrap vars
+$blue:    #007bff !default;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #e83e8c !default;
+$red:     #dc3545 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #ffc107 !default;
+$green:   #28a745 !default;
+$teal:    #20c997 !default;
+$cyan:    #17a2b8 !default;
+$white:    #fff !default;
+$black:    #000 !default;
+
+$primary:       $blue !default;
+$secondary:     #6c757d !default;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         #f8f9fa !default;
+$medium:        #6c757d !default;
+$dark:          #343a40 !default;
