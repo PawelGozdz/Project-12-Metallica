@@ -35,3 +35,49 @@ $breakpoint argument choices:
     @media (min-width: 75em) { @content }; // 1200px
   } 
 }
+
+// Animations
+// @keyframes glowing {
+//   0% { text-shadow: 0 0 -10px $blue; }
+//   40% { text-shadow: 0 0 30px $blue; }
+//   60% { text-shadow: 0 0 30px $blue; }
+//   100% { text-shadow: 0 0 -10px $blue; }
+// }
+
+@keyframes glowing {
+  0% { 
+    text-shadow: 0 0 -10px $blue; 
+  }
+  // 40% { text-shadow: 0 0 30px $blue; }
+  60% { 
+    text-shadow: 0 0 30px $blue; 
+    transform: scale(1.15);
+  }
+  100% { 
+    text-shadow: 0 0 -10px $blue; 
+    transform: scale(1);
+  }
+}
+.glowing {
+  animation: glowing 400ms forwards;
+}
+
+// Buttons
+@mixin button($color) {
+  display: inline-block;
+  background-color: $color;
+  color: white;
+  font-size: .8rem;
+  margin-left: auto;
+  padding: 0 $sp-2;
+  cursor: pointer;
+  // border: 1px solid dargen($color, 20%);
+  border: 1px solid $color;
+  box-shadow: 2px 2px 5px rgba(0,0,0, .4);
+  transition: all .3s ease;
+  
+  &:hover {
+    background-color: lighten($color, 20%);
+    box-shadow: 3px 3px 15px rgba(0,0,0, .6);
+  }
+}

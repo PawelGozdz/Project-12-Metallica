@@ -1,6 +1,12 @@
 // Laoyout
-.wrapper {
-  width: 100%;
+.wrapper,
+.hero,
+.info {
+  max-width: $width-full;
+}
+
+.info {
+  padding-bottom: $sp-5;
 }
 
 // Base
@@ -10,9 +16,14 @@ ul {
 
 // Anchor
 a {
-  color: $white;
+  color: $dark;
 
   &:hover {
-    color: darken($white, 50%);
+    color: lighten($dark, 20%);
   }
+}
+
+// Buttons
+.button {
+  @include button(indigo);
 }

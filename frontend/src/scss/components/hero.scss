@@ -1,11 +1,39 @@
 .hero {
   height: 100vh;
-  background-image: url('../img/metallica-stage.jpg');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-
-  &__list {
-    display: flex;
+  
+  &--home {
+    background-image: url('../img/metallica-main-stage.jpg');
   }
+
+  &__headings {
+    position: relative;
+    width: $width-full;
+    height: 100%;
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    
+    @include respond(tab-land) {
+      transform: translateY(-100px);
+    }
+  }
+  
+  // .heading__main > *{
+  //     // &:first-child.glowing,
+  //     &:last-child.glowing {
+  //     transform: scale(1.5);
+  //   }
+  // }
+
+  &__item {
+    display: inline-block;
+  }
+
 }
+

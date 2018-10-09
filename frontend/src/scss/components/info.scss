@@ -1,0 +1,59 @@
+.info {
+  background-color: $light;
+  display: inline-block;
+  width: $width-full;
+  height: auto;
+
+  &__years {
+    font-size: 80%;
+  }
+
+  &__row {
+    display: flex;
+    padding: $sp-1;
+    align-items: center;
+
+    &:nth-child(even) {
+      background-color: darken($light, 2%);
+    }
+
+    & > * {
+      margin-bottom: 0;
+    }
+  }
+
+  &__frame {
+    height: 100%;
+    width: auto; 
+  }
+
+  &__img {
+    max-width: 100%;
+  }
+
+  &__date {
+    text-align: center;
+    margin-right: $sp-2;
+  }
+
+  &__month {
+    font-weight: bold;
+  }
+
+  &__day {
+    
+  }
+
+  &__details {
+
+  }
+
+  &__address {
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+
+  &__place {
+    font-size: .8rem;
+  }
+} 

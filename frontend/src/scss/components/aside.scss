@@ -1,0 +1,141 @@
+// Aside menu
+.aside {
+  background: $light;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 0;
+  height: 100vh;
+  max-height: 100vh;
+  width: 85%;
+  transform: translateX(-3000px);
+  opacity: .95;
+  padding: $sp-3 $sp-2;
+  z-index: 100;
+
+  @include respond(tab-port) {
+    width: 75%;
+  }
+  @include respond(tab-land) {
+    width: 70%;
+  }
+  @include respond(laptop) {
+    width: 60%;
+  }
+  @include respond(big-laptop) {
+    width: 50%;
+  }
+  
+  &.open {
+    transform: translateX(0);
+    transition: all .4s ease;
+  }
+  
+  &__icon {
+    position: relative;
+    margin-top: $sp-1;
+    cursor: pointer;
+
+    &--close {
+      position: absolute;
+      top: $sp-1;
+      right: $sp-2;
+      background: transparent;
+      z-index: 101;
+    }
+  }
+
+  &__container {
+    max-height: 100vh;
+    margin-top: $sp-4;
+
+    &--1 {
+
+    }
+
+    &--2 {
+
+    }
+  }
+
+  &__item {
+    border-bottom: 1px solid $dark;
+
+    &:not(:last-child) {
+      margin-bottom: $sp-2;
+    }
+  }
+
+  &__link {
+    display: block;
+
+  }
+
+  &__sublist {
+    display: flex;
+    margin-top: $sp-2;
+  }
+
+  &__subitem {
+    
+    & > .aside__link {
+      color: $indigo;
+    }
+
+    &:not(:last-child) {
+      margin-right: $sp-3;
+    }
+  }
+
+  &__boxes {
+    padding: 0 $sp-3;
+    max-height: 100%;
+    overflow: hidden;
+    display: none;
+
+    @include respond(tab-land) {
+      display: block;
+    }
+  }
+
+  &__box {
+    display: block;
+    opacity: 1;
+  }
+  
+  &__box.hide {
+    display: none;
+    opacity: 0;
+  }
+
+  &__photo {
+    width: 100%;
+  }
+
+  figcaption {
+
+  }
+}
+
+.social-media {
+
+  &__list {
+    display: flex;
+    margin-top: $sp-4;
+  }
+
+  &__item:not(:last-child) {
+    margin-right: $sp-2;
+    
+    @include respond(tab-port) {
+      margin-right: $sp-3;
+    }
+  }
+
+  .fab {
+    
+    @include respond(tab-port) {
+      font-size: 1.2rem;
+    }
+  }
+}
