@@ -5,10 +5,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-// ['babel-polyfill', './src/js/index.js'],
+// ['babel-polyfill', './src/js/index.js', '../scss/main.scss'],
 
 module.exports = {
-  entry: './src/js/index.js',
+  entry: ['./src/js/index.js', './src/scss/main.scss'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'js/script.js'

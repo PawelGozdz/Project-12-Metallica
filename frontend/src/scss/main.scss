@@ -3,13 +3,14 @@
 @import "./abstracts/mixins";
 
 // Fonts
-@import "./fonts/fonts.css";
+// @import "./fonts/fonts.css";
 
 // Components
 @import './components/navigation';
 @import './components/aside';
 @import './components/hero';
-@import './components/info';
+@import './components/events';
+@import './components/gallery';
 
 // Pages
 @import './pages/index';

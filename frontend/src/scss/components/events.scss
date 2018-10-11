@@ -1,0 +1,29 @@
+.events {
+  background-color: $light;
+  display: inline-block;
+  width: $width-full;
+  height: auto;
+
+
+  &__row {
+    display: flex;
+    padding: $sp-1;
+    align-items: center;
+
+    &:nth-child(odd) {
+      background-color: darken($light, 6%);
+    }
+
+    & > * {
+      margin-bottom: 0;
+    }
+  }
+
+  &__btn {
+    margin-top: $sp-2;
+  }
+} 
+
+[name^="result"] .col {
+  text-align: center;
+}

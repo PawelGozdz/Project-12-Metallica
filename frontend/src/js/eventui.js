@@ -2,46 +2,47 @@ class UI {
   constructor() {
     // Inicialisation
     // this.init();
-    this.result = document.querySelector('#result');
+    this.result = document.querySelector('[name^="result"]');
   }
 
-  // When the app starts
-  // init() {
-  //   // Display categories in <select> (if present)
-  //   // this.printCategories();
-
-  //   // Selecting the results container
-  // }
-  // // Display events from the api
   // Display events from the api
   displayEvents(events) {
     this.events = events;
-    console.log(events);
+    console.log(this.events);
     // Build HTML template
     let htmlTemplate = '';
-    // Loop through the events and print the result
-    events.forEach((event) => {
-      htmlTemplate += `
-        <div class="col-md-6 col-xl-4">
-          <div class="card">
-            <div class="card-body">
-              <img class="card-img-top" src="${event.logo !== null ? event.logo.url : ''}">
-            </div>
-            <div class="card-body">
-              <div class="card-text">
-                <h2 class="heading heading__article">${event.name.text}</h2>
-                <p class="lead text-info">Event Information:</p>
-                <p>${event.description.text.substring(0, 120)}...</p>
-                <span class="badge badge-secondary">Date & Time: ${event.start.local}</span>
 
-                <a href="${event.url}" target="_blank" class="btn btn-primary btn-block mt-2">Get Tickets</a>
+    if (this.result) {
+      // Result container in index page will display only 6 records
+      const indexPageRecords = this.result.getAttribute('name') === 'result-index' ? 6 : this.events.length;
+
+      // Loop through the events and print the result
+      this.events.filter((el, index) => index < indexPageRecords)
+        .forEach((event, index) => {
+          htmlTemplate += `
+            <div class="col-md-6 col-xl-4">
+              <div class="card-img-top">
+                <img class="card-img-top" src="${event.logo !== null ? event.logo.url : ''}">
+              </div>
+              <div class="card-body">
+                <div class="card-text">
+                <h3 class="events__heading">${event.name.text.substring(0, 40)} ...</h3>
+                  <p class="lead text-info">Event Information:</p>
+                  <p>${event.description.text.substring(0, 120)}...</p>
+                  <span class="badge badge-secondary">Date & Time: ${event.start.local}</span>
+                  <a href="${event.url}" target="_blank" class="btn btn-primary btn-block events__btn">Get Tickets</a>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      `;
-    });
+          `;
+        });
+    }
     this.result.innerHTML = htmlTemplate;
+    // Insert 'READ MORE' button to 'index' page
+    const readMoreBtn = '<div class="col text-centre"><a href="/events" class="btn btn-secondary events__btn events__btn--check">Check for more events...</a></div>';
+    if (this.result.getAttribute('name') === 'result-index') {
+      this.result.innerHTML += readMoreBtn;
+    }
   }
 
   // Print categories
@@ -75,12 +76,11 @@ class UI {
       ? document.querySelector('#search-events')
       : undefined;
     searchDiv.appendChild(div);
-    
+
     // Remove the alert after 3s
     setTimeout(() => {
       this.removeMessage();
     }, 3000);
-
   }
 
   // Remove the message with alert

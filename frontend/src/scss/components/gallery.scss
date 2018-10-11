@@ -1,0 +1,25 @@
+.gallery {
+
+  .row > * {
+    height: 8rem;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+    @include respond(tab-land) {
+      height: 10rem;
+    }
+    @include respond(laptop) {
+      height: 12rem;
+    }
+    @include respond(big-laptop) {
+      height: 14rem;
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .row > *:nth-child(#{$i}) {
+      background-image: url('../img/metallica-#{$i}.jpg');
+    }
+  }
+}

@@ -1,5 +1,5 @@
-import '../scss/main.scss';
-import 'bootstrap';
+// import '../scss/main.scss';
+// import 'bootstrap';
 import glowing from './cssEffects';
 import { asideMenu, asideSlider } from './asideMenu';
 import { Event } from './eventapi';
@@ -25,7 +25,7 @@ function runApi() {
   // Print categories list to the <select> (if exists)
   event.getCategoriesAPI()
     .then((list) => {
-      
+      // Printing categories
       ui.printCategories(list);
     });
 
