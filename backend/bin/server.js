@@ -46,8 +46,11 @@ server.unifiedServer = (req, res) => {
     buffer += decoder.end();
 
     // Wybieranie który handler powinien byc uzyty. 'notFound' jako default
-    const chosenHandler = typeof (server.router[trimmedPath]) !== 'undefined' ? server.router[trimmedPath] : handlers.notFound;
+    let chosenHandler = typeof (server.router[trimmedPath]) !== 'undefined' ? server.router[trimmedPath] : handlers.notFound;
 
+    // Jezeli request znajduje sie w 'assets', wybierz assets handler. Ten request jest do css, img, js etc
+    chosenHandler = trimmedPath.indexOf('assets/') > -1 ? handlers.assets : chosenHandler;
+    
     // Konstruowanie obiektu data i przesylanie go do handlera
     const data = {
       trimmedPath,
@@ -77,9 +80,32 @@ server.unifiedServer = (req, res) => {
 
       if (contentType === 'html') {
         res.setHeader('Content-Type', 'text/html');
-        // Walidacja payload powracającego od handlera.
-        // Pusty object jako default, jezeli callback zwroci sam kod bez payload
         payloadString = typeof (payload) === 'string' ? payload : '';
+      }
+
+      if (contentType === 'favicon') {
+        res.setHeader('Content-Type', 'image/x-icon');
+        payloadString = typeof (payload) !== 'undefined' ? payload : '';
+      }
+
+      if (contentType === 'css') {
+        res.setHeader('Content-Type', 'text/css');
+        payloadString = typeof (payload) !== 'undefined' ? payload : '';
+      }
+
+      if (contentType === 'png') {
+        res.setHeader('Content-Type', 'image/png');
+        payloadString = typeof (payload) !== 'undefined' ? payload : '';
+      }
+
+      if (contentType === 'jpg') {
+        res.setHeader('Content-Type', 'image/jpeg');
+        payloadString = typeof (payload) !== 'undefined' ? payload : '';
+      }
+
+      if (contentType === 'plain') {
+        res.setHeader('Content-Type', 'text/plain');
+        payloadString = typeof (payload) !== 'undefined' ? payload : '';
       }
 
       // Zwracanie odpowiedzi wspólnych dla wszystkich "content typów"
@@ -91,7 +117,9 @@ server.unifiedServer = (req, res) => {
 
 // Routery
 server.router = {
-  '': handlers.index
+  '': handlers.index,
+  events: handlers.events,
+  assets: handlers.assets
 };
 
 server.init = () => {

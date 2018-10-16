@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nf start",
     "backend": "nodemon backend/bin/server",
-    "frontend": "parcel frontend/src/index.html"
+    "frontend": "parcel frontend/dist/index.html"
   },
   "author": "Pawel Gozdz",
   "license": "ISC"

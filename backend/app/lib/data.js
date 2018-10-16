@@ -67,7 +67,21 @@ lib.createDB = (dir, file, data, callback) => {
 //   });
 // };
 // Wczytywanie
-lib.readFromDB = (dir, file, callback) => {
+lib.readVariablesFromDB = (dir, file, callback) => {
+  /**
+   * dir - directory, database name in this case
+   * file - (path like index, about etc and additional paramss like id, album etc)
+   * callback - send the message and the data (if valid) from db
+   */
+  // const x = urlObj.queryStringObject;
+
+  // Checking if there are any values in the url and assigning them if valid
+  // for (const key in x) {
+  //   x[key] = x[key].length > 0 && typeof (x[key]) === 'string' ? x[key] : false;
+  // }
+
+  // const { album, id } = x;
+  // console.log(album);
   // Zapisywanie do bazy danych
   const sql = `SELECT variable, text FROM variables
               INNER JOIN pages ON variables."pageId" = pages.id

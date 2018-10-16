@@ -18,13 +18,44 @@ helpers.parseJsonToObject = (str) => {
   }
 };
 
-// Wczytywanie template
+// Print on the page dynamically records 
+helpers.printDynamicRecords = (dbRecs = [], element = 'div', attributes = '') => {
+  /**
+   * dbRecs - array with records from DB
+   * element - element to create
+   * attributes - attributes to assign
+   */
+
+   // Each element from dbRecs might have different href, src etc
+  let attrList = '';
+
+  for (const attr in attributes) {
+    attrList += ` ${attr}="${attributes[attr]}"`;
+  }
+  
+  return dbRecs.reduce((acc, val, i, ar) => {
+    // Base on number elements from [], loop over and create appropriate element using template literals
+
+    acc += `
+      <${element}${attrList}>
+        ${typeof (val) === 'object' ? Object.keys(val).map(key => val[key]) : val}
+      </${element}>`;
+    return acc;
+  }, '');
+};
+
+const arr = [{ song: 'Hit the Lights', album: 'Reload' }, { song: 'The Four Horsemen' }, { song: 'Jump in the Fire' }, { song: 'Whiplash' }];
+// const arr = ['Hit the Lights', 'The Four Horsemen'];
+const test = helpers.printDynamicRecords(arr, 'div', { class: 'open', type: 'submit', href: '' });
+console.log(test);
+
+// Reading template
 helpers.getTemplate = (templateName, data, callback) => {
   templateName = typeof (templateName) === 'string' && templateName.length > 0 ? templateName : false;
   data = typeof (data) === 'object' && data !== null ? data : {};
 
   if (templateName) {
-    const templateDir = path.join(__dirname, '../templates/');
+    const templateDir = path.join(__dirname, '../../../frontend/dist/');
     fs.readFile(`${templateDir}${templateName}.html`, 'utf8', (error, str) => {
       if (!error && str && str.length > 0) {
         const finalString = helpers.interpolate(str, data);
@@ -83,6 +114,26 @@ helpers.interpolate = (str, data) => {
   });
 
   return str;
+};
+
+// Pobieranie plików (css, js, img etc) js/index.js
+helpers.getStaticAssets = (fileName, callback) => {
+  // Background-image kompilowane w scss, dostają dodatkowy przedrostek assets/css,
+  // który powoduje błąd w pobieraniu tych zdjęć
+  fileName = fileName.indexOf('css/assets/img') > -1 ? fileName.replace('css/assets/img', 'img') : fileName;
+  fileName = typeof (fileName) === 'string' && fileName.length > 0 ? fileName : false;
+
+  if (fileName) {
+    const publicDir = path.join(__dirname, '../../../frontend/dist/assets/');
+
+    fs.readFile(publicDir + fileName, (err, data) => {
+      if (!err && data) {
+        callback(false, data);
+      } else {
+        callback('Nie znaleziono pliku');
+      }
+    });
+  }
 };
 
 // Export module

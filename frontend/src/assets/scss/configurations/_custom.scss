@@ -1,0 +1,30 @@
+// Laoyout
+.wrapper,
+.hero,
+.events {
+  max-width: $width-full;
+  overflow: hidden;
+}
+
+.events {
+  padding-bottom: $sp-5;
+}
+
+// Base
+ul {
+  list-style-type: none;
+}
+
+// Anchor
+a {
+  color: $dark;
+
+  &:hover {
+    color: lighten($dark, 20%);
+  }
+}
+
+// Buttons
+.button {
+  @include button(indigo);
+}

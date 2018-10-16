@@ -8,10 +8,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // ['babel-polyfill', './src/js/index.js', '../scss/main.scss'],
 
 module.exports = {
-  entry: ['./src/js/index.js', './src/scss/main.scss'],
+  entry: ['./src/assets/js/index.js', './src/assets/scss/main.scss'],
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'js/script.js'
+    path: path.resolve(__dirname, './dist'),
+    filename: 'assets/js/script.js'
     // filename: 'js/[name].[chunkhash].js'
   },
   devServer: {
@@ -28,7 +28,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+        use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader?url=false', 'postcss-loader', 'sass-loader']
       },
       {
         test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
@@ -36,8 +36,8 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              outputPath: 'fonts/',
-              name: '[name].[ext]'
+              // outputPath: 'assets/fonts/',
+              name: 'assets/fonts/[name].[ext]'
             }
           }
         ]
@@ -49,7 +49,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '/img/[name].[ext]'
+              name: '~assets/img/[name].[ext]'
             }
           }
         ]
@@ -94,14 +94,38 @@ module.exports = {
     //   { filename: 'css/style.[hash].css', disable: false, allChunks: true }
     // ),
     new MiniCssExtractPlugin({
-      filename: 'css/style.css'
+      filename: './assets/css/style.css'
       // filename: 'css/style.[contenthash].css'
     }),
+    // new HtmlWebpackPlugin({
+    //   inject: false,
+    //   hash: true,
+    //   template: './src/index.html',
+    //   filename: 'index.html'
+    // })
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
       template: './src/index.html',
       filename: 'index.html'
+    }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      hash: true,
+      template: './src/events.html',
+      filename: 'events.html'
+    }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      hash: true,
+      template: './src/_header.html',
+      filename: '_header.html'
+    }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      hash: true,
+      template: './src/_footer.html',
+      filename: '_footer.html'
     })
     // new WebpackMd5Hash()
   ]
