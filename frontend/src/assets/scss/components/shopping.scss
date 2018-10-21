@@ -1,0 +1,120 @@
+.shopping {
+
+  // Navigation starts
+  &__tabs {
+    display: flex;
+    justify-content: space-between;
+    // width: 100%;
+  }
+  
+  &__tab {
+    text-align: center;
+    flex: 1 0;
+    overflow: hidden;
+
+    &:not(:last-child) {
+      margin-right: 2px;
+    }
+  }
+
+  &__choose {
+    display: block;
+    padding: $sp-1;
+    font-size: 1rem;
+    background: lighten($secondary, 30%);
+    transition: all .2s;
+
+    &:hover {
+      background: lighten($secondary, 35%);
+      transform: scale(1.1);
+    }
+
+    // &:target,
+    // &:active {
+    //   background: red;
+    // }
+    
+    @include respond(tab-port) {
+      font-size: 1.3rem;
+      padding: $sp-2 $sp-3;
+    }
+
+    &.active {
+      background: lighten($secondary, 50%);
+    }
+  }
+  // Navigation ends
+
+  // Body starts
+
+  .heading__article {
+    text-align: left;
+  }
+
+  &__body {
+    display: none;
+    padding: $sp-1;
+    
+    @include respond(tab-land) {
+      padding: $sp-2;
+    }
+
+    &.active {
+      display: block;
+    }
+  }
+
+  &__top,
+  &__bottom {
+
+  }
+
+  &__container {
+    min-height: 8rem;
+    margin-top: $sp-3;
+    
+    @include respond(tab-port) {
+      margin-top: $sp-4;
+
+    }
+  }
+
+  &__position {
+    margin-left: $sp-2;
+
+
+    @for $i from 1 through 4 {
+      &--#{$i}::before {
+        content: '#{$i}';
+        position: absolute;
+        display: inline-block;
+        font-size: 1.5rem;
+        top: -12%;
+        left: 8%;
+        height: 2.9rem;
+        width: 2.9rem;
+        padding: $sp-1 $sp-1 $sp-1 $sp-2;
+        margin: 0 auto;
+        background: $white;
+        color: $dark;
+        border-radius: 50%;
+        border: 2px solid $primary;
+      }
+    }
+
+    figcaption {
+      margin-top: $sp-1;
+      font-size: .8rem;
+    }
+  }
+
+  &__img {
+    max-width: 6rem;
+    
+    @include respond(tab-port) {
+      max-width: 7rem;
+    }
+  }
+
+  // Body ends  
+}

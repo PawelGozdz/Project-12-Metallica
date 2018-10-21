@@ -4,7 +4,7 @@ CREATE TABLE pages(
 );
 
 CREATE TABLE sections(
-  id SERIAL PRIMARY KEY,
+  id SERIAL PRIMARY KEY NOT NULL,
   section VARCHAR(20) NOT NULL
 );
 
@@ -18,21 +18,44 @@ CREATE TABLE variables(
 );
 
 CREATE TABLE albums(
-  id SERIAL PRIMARY KEY,
+  id INTEGER PRIMARY KEY NOT NULL,
   album VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE songs(
-  id SERIAL PRIMARY KEY,
+  id SERIAL PRIMARY KEY NOT NULL,
   song VARCHAR(100) NOT NULL,
   lyrics VARCHAR(1500),
   "albumId" INTEGER,
   FOREIGN KEY ("albumId") REFERENCES albums(id)
 );
 
--- CREATE TABLE html(
+CREATE TABLE sizes(
+  id SERIAL PRIMARY KEY NOT NULL,
+  size VARCHAR(4) NOT NULL
+);
 
--- );
+CREATE TABLE gender(
+  id SERIAL PRIMARY KEY,
+  sex VARCHAR(1)
+);
+
+CREATE TABLE types(
+  id SERIAL PRIMARY KEY,
+  item VARCHAR(20)
+);
+
+CREATE TABLE clothes(
+  product VARCHAR NOT NULL,
+  "itemId" INTEGER NOT NULL,
+  "sizeId" INTEGER NOT NULL,
+  "genderId" INTEGER NOT NULL,
+  "albumId" INTEGER NOT NULL,
+  FOREIGN KEY ("itemId") REFERENCES types(id),
+  FOREIGN KEY ("sizeId") REFERENCES sizes(id),
+  FOREIGN KEY ("genderId") REFERENCES gender(id),
+  FOREIGN KEY ("albumId") REFERENCES albums(id)
+);
 
 INSERT INTO pages(page)
   VALUES('index'),('about'),('contact'),('shop'),('events');
@@ -52,18 +75,19 @@ INSERT INTO variables(variable, text, "pageId", "sectionId")
         ('hero.sub-heading', 'Funpage', 1, 2),
         ('hero.sub-heading', 'Check out what''s next!', 5, 2);
 
-INSERT INTO albums(album)
-  VALUES('Kill ''em all'), 
-        ('Ride the Lightning'), 
-        ('Master of Puppets'),
-        ('...And Justice For All'),
-        ('The Black Album'),
-        ('Load'),
-        ('Reload'),
-        ('Garage, Inc.'),
-        ('St. Anger'),
-        ('Death Magnetic'),
-        ('Hardwired');
+INSERT INTO albums(id, album)
+  VALUES(0, 'N/A'),
+        (1, 'Kill ''em all'), 
+        (2, 'Ride the Lightning'), 
+        (3, 'Master of Puppets'),
+        (4, '...And Justice For All'),
+        (5, 'The Black Album'),
+        (6, 'Load'),
+        (7, 'Reload'),
+        (8, 'Garage, Inc.'),
+        (9, 'St. Anger'),
+        (10, 'Death Magnetic'),
+        (11, 'Hardwired');
 
 INSERT INTO songs(song, "albumId")
   VALUES('Hit the Lights', 1),
@@ -199,3 +223,27 @@ INSERT INTO songs(song, "albumId")
         ('Am I Savage?', 11),
         ('Murder One', 11),
         ('Spit Out the Bone', 11);
+
+
+INSERT INTO sizes(size)
+  VALUES('S'),('M'),('L'),('XL'),('XXL');
+
+INSERT INTO gender(sex)
+  VALUES('M'),('W'),('U');
+
+INSERT INTO types(item)
+  VALUES('shirt'),
+        ('trousers'),
+        ('jacket'),
+        ('socks'),
+        ('hat'),
+        ('hoodie');
+
+INSERT INTO clothes(product, "itemId", "sizeId", "genderId", "albumId")
+  VALUES('Master of puppers shirt', 1, 3, 3, 3),
+        ('Lightning', 3, 5, 1, 2),
+        ('Brown Metallica hat', 5, 2, 3, 0),
+        ('Leather, black metal trousers', 2, 5, 2, 0),
+        ('Metal Horns', 5, 4, 1, 11),
+        ('Black Snake', 1, 2, 1, 5),
+        ('Electric Car', 4, 2, 3, 6);

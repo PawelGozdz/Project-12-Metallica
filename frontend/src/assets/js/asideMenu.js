@@ -1,4 +1,5 @@
 function asideMenu(e) {
+  e.preventDefault();
   const aside = document.querySelector('.aside');
   aside.classList.toggle('open');
   // document.addEventListener('click', (ev) => {

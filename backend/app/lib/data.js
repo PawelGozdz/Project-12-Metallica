@@ -66,8 +66,25 @@ lib.createDB = (dir, file, data, callback) => {
 //     }
 //   });
 // };
+lib.readVariablesForDynamicContent = (category,  callback) => {
+  /**
+   * dir - directory, database name in this case
+   * file - (path like index, about etc and additional paramss like id, album etc)
+   * callback - send the message and the data (if valid) from db
+   */
+  // callback('Text', 'aaa');
+  // const x = urlObj.queryStringObject;
+
+  // Checking if there are any values in the url and assigning them if valid
+  // for (const key in x) {
+  //   x[key] = x[key].length > 0 && typeof (x[key]) === 'string' ? x[key] : false;
+  // }
+
+  // const fetchDB = fetch();
+};
+
 // Wczytywanie
-lib.readVariablesFromDB = (dir, file, callback) => {
+lib.readRegularVariablesFromDB = (dir, file, callback) => {
   /**
    * dir - directory, database name in this case
    * file - (path like index, about etc and additional paramss like id, album etc)

@@ -4,9 +4,13 @@ import { glowing, expandListItems } from './cssEffects';
 import { asideMenu, asideSlider } from './asideMenu';
 import { Event } from './eventapi';
 import { UI } from './eventui';
+import { topNavbar } from './topNavigation';
+import { shoppingTabs } from './shoppingTabs';
+import { Shop } from './shoppingui';
 
 const event = new Event();
 const ui = new UI();
+const shop = new Shop();
 // let ui = '';
 // console.log(ui);
 
@@ -15,11 +19,15 @@ function main() {
   asideSlider();
   setInterval(() => glowing(), 1900);
   runApi();
+  topNavbar();
+  shop.displayRandomRecords();
 }
 
 function eventListeners() {
   document.querySelectorAll('.aside__icon').forEach(el => el.addEventListener('click', asideMenu));
   document.querySelectorAll('.albums__img').forEach(el => el.addEventListener('click', expandListItems));
+  document.querySelectorAll('.shopping__tab').forEach(el => el.addEventListener('click', shoppingTabs));
+  document.querySelectorAll('.shopping__a').forEach(el => el.addEventListener('click', fetchFromDB));
 }
 
 
@@ -57,6 +65,16 @@ function runApi() {
   } else {
     // Print message
   }
+}
+
+function readRegularVariablesFromDB() {
+  return new Promise((resolve, reject) => {
+    // const dataFomDB = fetch(`/?song=5`);
+
+    // resolve('Resolve', resolve);
+    // reject('reject', reject);
+    console.log('From Promise');
+  });
 }
 
 document.addEventListener('DOMContentLoaded', main);

@@ -13,7 +13,7 @@ handlers.index = (data, callback) => {
   // Odrzucanie zapyań innych niż GET
   if (data.method === 'get') {
     new Promise((resolve, reject) => {
-      dataModify.readVariablesFromDB('metallicadb', 'index', (text, dbData) => {
+      dataModify.readRegularVariablesFromDB('metallicadb', 'index', (text, dbData) => {
         if (dbData) {
           resolve(dbData);
         } else {
@@ -57,7 +57,7 @@ handlers.events = (data, callback) => {
   // Odrzucanie zapyań innych niż GET
   if (data.method === 'get') {
     new Promise((resolve, reject) => {
-      dataModify.readVariablesFromDB('metallicadb', 'events', (text, dbData) => {
+      dataModify.readRegularVariablesFromDB('metallicadb', 'events', (text, dbData) => {
         if (dbData) {
           resolve(dbData);
         } else {

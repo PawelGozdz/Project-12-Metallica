@@ -9,4 +9,4 @@ bash -c "psql -U metallica_user metallicadb < ./bin/sql/db_text.sql"
 
 echo "Skonfigurowano metallicadb"
 
-sleep 3
+sleep 10
