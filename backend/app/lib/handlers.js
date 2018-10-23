@@ -8,51 +8,85 @@ const handlers = {};
  * HTML handlers
  */
 
-// Index
+// Index page + shopping section
 handlers.index = (data, callback) => {
   // Odrzucanie zapyań innych niż GET
   if (data.method === 'get') {
-    new Promise((resolve, reject) => {
-      dataModify.readRegularVariablesFromDB('metallicadb', 'index', (text, dbData) => {
-        if (dbData) {
-          resolve(dbData);
-        } else {
-          reject(dbData);
-        }
-      });
-    })
-      .then((arr) => {
-        // Wyciaganie tabeli z obiektami i przypisywanie ich do jednego "newObj"
-        const newObj = {};
-        arr.forEach((element) => {
-          const { variable: key, text: val } = element;
-          newObj[key] = val;
-        });
-        return newObj;
-      })
-      .then((el) => {
-        // Wczytanie odpowiedniego template html i odesłanie go jako string
-        helpers.getTemplate('index', el, (error, string) => {
-          if (!error && string) {
-            helpers.addUniversalTemplates(string, el, (err, str) => {
-              if (!err && str) {
-                // Zwracanie pełnego stringa z zawartością strony
-                callback(200, str, 'html');
-              } else {
-                callback(500, undefined, 'html');
-              }
-            });
+    // Determine between loading whole index page or updating 'shopping' section with variables from DB
+    console.log(data.queryStringObject);
+    if (Object.keys(data.queryStringObject).length > 0) {
+      // console.log(data);
+      new Promise((resolve, reject) => {
+        dataModify.readVariablesForDynamicContent(data, (text, dbData) => {
+          if (dbData) {
+            // console.log(dbData);
+            resolve(dbData);
           } else {
-            console.log('Error lub brak str.', error);
-            callback(405, undefined, 'html');
+            reject(dbData);
           }
         });
       })
+      .then(dbdata => {
+        console.log('Returning dbdata', dbdata);
+        callback(200, dbdata[0], 'json');
+      })
+      // .then((arr) => {
+      //   // Wyciaganie tabeli z obiektami i przypisywanie ich do jednego "newObj"
+      //   const newObj = {};
+      //   arr.forEach((element) => {
+      //     const { variable: key, text: val } = element;
+      //     newObj[key] = val;
+      //   });
+
+      //   console.log(newObj);
+      //   return newObj;
+      // })
       .catch(errr => console.log(Error(errr)));
+    } else {
+      // It runs if no parameters in URL (index.html)
+      new Promise((resolve, reject) => {
+        dataModify.readRegularVariablesFromDB('metallicadb', 'index', (text, dbData) => {
+          if (dbData) {
+            resolve(dbData);
+          } else {
+            reject(dbData);
+          }
+        });
+      })
+        .then((arr) => {
+          // Wyciaganie tabeli z obiektami i przypisywanie ich do jednego "newObj"
+          const newObj = {};
+          arr.forEach((element) => {
+            const { variable: key, text: val } = element;
+            newObj[key] = val;
+          });
+          return newObj;
+        })
+        .then((el) => {
+          // Wczytanie odpowiedniego template html i odesłanie go jako string
+          helpers.getTemplate('index', el, (error, string) => {
+            if (!error && string) {
+              helpers.addUniversalTemplates(string, el, (err, str) => {
+                if (!err && str) {
+                  // Zwracanie pełnego stringa z zawartością strony
+                  callback(200, str, 'html');
+                } else {
+                  callback(500, undefined, 'html');
+                }
+              });
+            } else {
+              console.log('Error lub brak str.', error);
+              callback(405, undefined, 'html');
+            }
+          });
+        })
+        .catch(errr => console.log(Error(errr)));
+    }
+
   }
 };
 
-// Events
+// Events page
 handlers.events = (data, callback) => {
   // Odrzucanie zapyań innych niż GET
   if (data.method === 'get') {

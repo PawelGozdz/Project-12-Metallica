@@ -4,8 +4,8 @@ class Shop {
     this.random = [];
     this.cart = {};
     this.topAlbums = this.assignarray(this.displayRecords, 11) || [];
-    this.topSongs = this.assignarray(this.displayRecords, 6) || [];
-    this.topClothes = this.assignarray(this.displayRecords, 6) || [];
+    this.topSongs = this.assignarray(this.displayRecords, 130) || [];
+    this.topClothes = this.assignarray(this.displayRecords, 7) || [];
     this.topOther = this.assignarray(this.displayRecords, 6) || [];
   }
 
@@ -55,9 +55,8 @@ class Shop {
       elementHMTL += `
         <div class="col-6 col-sm-3">
           <figure class="shopping__position shopping__position--${index + 1}">
-            <img src="./assets/img/${subjectType}-${number}.jpg" alt="${subjectType}-${number}" class="shopping__img">
-            <figcaption>{${subjectType}.${number}}</figcaption>
-            <a href="/?albums=2&?song=13" class="shopping__a">link</a>
+            <img src="./assets/img/${subjectType}-${number}.jpg" alt="{${subjectType}.${number}} ${subjectType}" class="shopping__img" title="{${subjectType}.${number}}">
+            <p class="shopping__category">{${subjectType}.${number}}</p>
           </figure>
         </div>
       `;

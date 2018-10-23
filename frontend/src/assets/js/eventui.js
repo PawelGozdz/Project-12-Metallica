@@ -1,4 +1,4 @@
-class UI {
+class EventUI {
   constructor() {
     // Inicialisation
     // this.init();
@@ -90,4 +90,4 @@ class UI {
   }
 }
 
-export { UI };
+export { EventUI };

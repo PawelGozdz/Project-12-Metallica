@@ -30,6 +30,13 @@ CREATE TABLE songs(
   FOREIGN KEY ("albumId") REFERENCES albums(id)
 );
 
+CREATE TABLE other(
+  id SERIAL PRIMARY KEY NOT NULL,
+  other VARCHAR(100) NOT NULL,
+  "albumId" INTEGER,
+  FOREIGN KEY ("albumId") REFERENCES albums(id)
+);
+
 CREATE TABLE sizes(
   id SERIAL PRIMARY KEY NOT NULL,
   size VARCHAR(4) NOT NULL
@@ -46,7 +53,8 @@ CREATE TABLE types(
 );
 
 CREATE TABLE clothes(
-  product VARCHAR NOT NULL,
+  id SERIAL PRIMARY KEY NOT NULL,
+  cloth VARCHAR NOT NULL,
   "itemId" INTEGER NOT NULL,
   "sizeId" INTEGER NOT NULL,
   "genderId" INTEGER NOT NULL,
@@ -228,6 +236,14 @@ INSERT INTO songs(song, "albumId")
 INSERT INTO sizes(size)
   VALUES('S'),('M'),('L'),('XL'),('XXL');
 
+INSERT INTO other(other,"albumId")
+  VALUES('Black Ring', 5),
+        ('Ride the Lightning necklace', 2),
+        ('Metal waist', 9),
+        ('Master keyring', 3),
+        ('Hardwired skull', 11),
+        ('Belt color desert', 10);
+
 INSERT INTO gender(sex)
   VALUES('M'),('W'),('U');
 
@@ -239,11 +255,11 @@ INSERT INTO types(item)
         ('hat'),
         ('hoodie');
 
-INSERT INTO clothes(product, "itemId", "sizeId", "genderId", "albumId")
+INSERT INTO clothes(cloth, "itemId", "sizeId", "genderId", "albumId")
   VALUES('Master of puppers shirt', 1, 3, 3, 3),
         ('Lightning', 3, 5, 1, 2),
         ('Brown Metallica hat', 5, 2, 3, 0),
         ('Leather, black metal trousers', 2, 5, 2, 0),
         ('Metal Horns', 5, 4, 1, 11),
-        ('Black Snake', 1, 2, 1, 5),
-        ('Electric Car', 4, 2, 3, 6);
+        ('Black Snake', 2, 1, 2, 4),
+        ('Electric Car', 3, 1, 1, 8);
