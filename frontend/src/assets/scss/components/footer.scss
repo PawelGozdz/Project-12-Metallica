@@ -1,0 +1,15 @@
+.footer {
+  background: $dark;
+  color: $white;
+  text-align: center;
+  padding: $sp-1 ;
+
+  & > p {
+    margin-bottom: 0;
+    padding: $sp-1;
+  }
+
+  &__website a {
+    color: $white;
+  }
+}

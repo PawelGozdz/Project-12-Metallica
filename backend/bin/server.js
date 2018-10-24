@@ -4,7 +4,6 @@ const { StringDecoder } = require('string_decoder');
 const handlers = require('../app/lib/handlers');
 const config = require('../secret/config');
 const helpers = require('../app/lib/helpers');
-const dataLib = require('../app/lib/data');
 
 const server = {};
 
@@ -12,30 +11,25 @@ server.httpServer = http.createServer((req, res) => {
   server.unifiedServer(req, res);
 });
 
-// TEST
-// dataLib.readFromDB('metallicadb', 'index', (text, data = '') => {
-//   console.log(text, data);
-// });
-
-// Logika dla servera
+// Server logic
 server.unifiedServer = (req, res) => {
-  // Parsowanie URL
+  // Parsing URL
   const parsedUrl = url.parse(req.url, true);
 
-  // Pobieranie path
+  // Reading the path
   const path = parsedUrl.pathname;
   const trimmedPath = path.replace(/^\/+|\/+$/g, '');
 
-  // Pobieranie query string do obiektu
+  // Reading query string object
   const queryStringObject = parsedUrl.query;
 
-  // Pobieranie metody HTTP request
+  // Reading HTTP method
   const method = req.method.toLowerCase();
 
-  // Pobieranie headerów jako obiekt
+  // Reading headers as an object
   const { headers } = req.headers;
 
-  // Pobieranie payload
+  // Loading payload
   const decoder = new StringDecoder('utf-8');
   let buffer = '';
   req.on('data', (data) => {
@@ -45,13 +39,14 @@ server.unifiedServer = (req, res) => {
   req.on('end', () => {
     buffer += decoder.end();
 
-    // Wybieranie który handler powinien byc uzyty. 'notFound' jako default
+    // Choosing which handler should be used. 'notFound' as default
     let chosenHandler = typeof (server.router[trimmedPath]) !== 'undefined' ? server.router[trimmedPath] : handlers.notFound;
 
-    // Jezeli request znajduje sie w 'assets', wybierz assets handler. Ten request jest do css, img, js etc
+    // If request comes from 'assets', choose 'assets' handler. 
+    // This handler is for (css, img, js, itc) files
     chosenHandler = trimmedPath.indexOf('assets/') > -1 ? handlers.assets : chosenHandler;
-    
-    // Konstruowanie obiektu data i przesylanie go do handlera
+
+    // Creting request object and send it to the handler
     const data = {
       trimmedPath,
       queryStringObject,
@@ -60,20 +55,24 @@ server.unifiedServer = (req, res) => {
       payload: helpers.parseJsonToObject(buffer)
     };
 
-    // Przekierowanie requesta do handlera znajdujacego sie w obiekcie router
+    // Passing the 'request data' object to the hahndler
     chosenHandler(data, (statusCode, payload, contentType) => {
-      // Sprawdzanie statusCode, payload, contentType z powracajácego callbacka
-      // contentType później będzie headerem 'html'
+      /**
+       * statusCode - status code send back by the handler
+       * payload - string with data (html page, css, js files etc)
+       * contentType - header
+       */
+
+      // Checking contentType. 'json' by default
       contentType = typeof (contentType) === 'string' ? contentType : 'json';
-      // Sprawdzanie statusu powracającego kodu, defaultowo 200
+      // Checking statusCode. 200 by default
       statusCode = typeof (statusCode) === 'number' ? statusCode : 200;
 
-      // Zwracanie odpowiedzi dla specyficznych content typów
+      // Validating payload for specific contentTypes
       let payloadString = '';
       if (contentType === 'json') {
         res.setHeader('Content-Type', 'application/json');
-        // Walidacja payload powracającego od handlera.
-        // Pusty object jako default, jezeli callback zwroci sam kod bez payload
+        // Empty object by default if handler returns empty payload
         payload = typeof (payload) === 'object' ? payload : {};
         payloadString = JSON.stringify(payload);
       }
@@ -108,14 +107,14 @@ server.unifiedServer = (req, res) => {
         payloadString = typeof (payload) !== 'undefined' ? payload : '';
       }
 
-      // Zwracanie odpowiedzi wspólnych dla wszystkich "content typów"
+      // Return response common for all content types
       res.writeHead(statusCode);
       res.end(payloadString);
     });
   });
 };
 
-// Routery
+// Request Routers
 server.router = {
   '': handlers.index,
   events: handlers.events,

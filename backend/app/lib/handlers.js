@@ -10,41 +10,30 @@ const handlers = {};
 
 // Index page + shopping section
 handlers.index = (data, callback) => {
-  // Odrzucanie zapyań innych niż GET
+  // Rejecting other than GET methods
   if (data.method === 'get') {
-    // Determine between loading whole index page or updating 'shopping' section with variables from DB
+    // Determine between loading whole index page
+    // or updating 'shopping' section with variables from DB
     console.log(data.queryStringObject);
     if (Object.keys(data.queryStringObject).length > 0) {
-      // console.log(data);
       new Promise((resolve, reject) => {
         dataModify.readVariablesForDynamicContent(data, (text, dbData) => {
           if (dbData) {
-            // console.log(dbData);
             resolve(dbData);
           } else {
             reject(dbData);
           }
         });
       })
-      .then(dbdata => {
-        console.log('Returning dbdata', dbdata);
-        callback(200, dbdata[0], 'json');
-      })
-      // .then((arr) => {
-      //   // Wyciaganie tabeli z obiektami i przypisywanie ich do jednego "newObj"
-      //   const newObj = {};
-      //   arr.forEach((element) => {
-      //     const { variable: key, text: val } = element;
-      //     newObj[key] = val;
-      //   });
+        .then((dbdata) => {
+          callback(200, dbdata[0], 'json');
+        })
+        .catch(errr => console.log(Error(errr)));
 
-      //   console.log(newObj);
-      //   return newObj;
-      // })
-      .catch(errr => console.log(Error(errr)));
     } else {
       // It runs if no parameters in URL (index.html)
       new Promise((resolve, reject) => {
+        // Rading specific page variables from DB
         dataModify.readRegularVariablesFromDB('metallicadb', 'index', (text, dbData) => {
           if (dbData) {
             resolve(dbData);
@@ -54,7 +43,7 @@ handlers.index = (data, callback) => {
         });
       })
         .then((arr) => {
-          // Wyciaganie tabeli z obiektami i przypisywanie ich do jednego "newObj"
+          // Creating a new Obj with the data from DB
           const newObj = {};
           arr.forEach((element) => {
             const { variable: key, text: val } = element;
@@ -63,19 +52,19 @@ handlers.index = (data, callback) => {
           return newObj;
         })
         .then((el) => {
-          // Wczytanie odpowiedniego template html i odesłanie go jako string
+          // Reading the correct template (index in this case) and process it as a string
           helpers.getTemplate('index', el, (error, string) => {
             if (!error && string) {
               helpers.addUniversalTemplates(string, el, (err, str) => {
                 if (!err && str) {
-                  // Zwracanie pełnego stringa z zawartością strony
+                  // Returning a full page template (page + header + footer)
                   callback(200, str, 'html');
                 } else {
                   callback(500, undefined, 'html');
                 }
               });
             } else {
-              console.log('Error lub brak str.', error);
+              console.log('Error. No string.', error);
               callback(405, undefined, 'html');
             }
           });
@@ -88,9 +77,10 @@ handlers.index = (data, callback) => {
 
 // Events page
 handlers.events = (data, callback) => {
-  // Odrzucanie zapyań innych niż GET
+  // Rejecting other than GET methods
   if (data.method === 'get') {
     new Promise((resolve, reject) => {
+      // Rading specific page variables from DB
       dataModify.readRegularVariablesFromDB('metallicadb', 'events', (text, dbData) => {
         if (dbData) {
           resolve(dbData);
@@ -100,7 +90,7 @@ handlers.events = (data, callback) => {
       });
     })
       .then((arr) => {
-        // Wyciaganie tabeli z obiektami i przypisywanie ich do jednego "newObj"
+        // Creating a new Obj with the data from DB
         const newObj = {};
         arr.forEach((element) => {
           const { variable: key, text: val } = element;
@@ -109,19 +99,19 @@ handlers.events = (data, callback) => {
         return newObj;
       })
       .then((el) => {
-        // Wczytanie odpowiedniego template html i odesłanie go jako string
+        // Reading the correct template (events in this case) and process it as a string
         helpers.getTemplate('events', el, (error, string) => {
           if (!error && string) {
             helpers.addUniversalTemplates(string, el, (err, str) => {
               if (!err && str) {
-                // Zwracanie pełnego stringa z zawartością strony
+                // Returning a full page template (page + header + footer)
                 callback(200, str, 'html');
               } else {
                 callback(500, undefined, 'html');
               }
             });
           } else {
-            console.log('Error lub brak str.', error);
+            console.log('Error. No string.', error);
             callback(500, undefined, 'html');
           }
         });
@@ -132,15 +122,15 @@ handlers.events = (data, callback) => {
 
 // Assets
 handlers.assets = (data, callback) => {
-  // Odrzucanie innych metod niż GET
+  // Rejecting other than GET methods
   if (data.method === 'get') {
-    // Pobieranie pliku
+    // Preparing the path
     const trimmedAssetName = data.trimmedPath.replace('assets/', '').trim();
     if (trimmedAssetName.length > 0) {
-      // Wczytywanie danych
+      // Reading the file
       helpers.getStaticAssets(trimmedAssetName, (err, dataa) => {
         if (!err && dataa) {
-          // Sprawdzanie jakiegy typu jest content (defaultowo plain text)
+          // Checking what type of content it is (plain as default)
           let contentType = 'plain';
 
           if (trimmedAssetName.indexOf('.css') > -1) {
@@ -159,7 +149,7 @@ handlers.assets = (data, callback) => {
             contentType = 'favicon';
           }
 
-          // Zwracanie danych
+          // Returning the file
           callback(200, dataa, contentType);
         } else {
           callback(404);
@@ -175,7 +165,7 @@ handlers.assets = (data, callback) => {
 
 // notFound
 handlers.notFound = (data, callback) => {
-  callback(404, { Error: 'Nie ma takiej strony...' });
+  callback(404, { Error: 'Page Not Found...' });
 };
 
 // Export handlers

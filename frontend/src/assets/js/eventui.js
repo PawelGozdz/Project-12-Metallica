@@ -8,7 +8,6 @@ class EventUI {
   // Display events from the api
   displayEvents(events) {
     this.events = events;
-    console.log(this.events);
     // Build HTML template
     let htmlTemplate = '';
 
@@ -39,7 +38,7 @@ class EventUI {
     }
     this.result.innerHTML = htmlTemplate;
     // Insert 'READ MORE' button to 'index' page
-    const readMoreBtn = '<div class="col text-centre"><a href="/events.html" class="btn btn-secondary events__btn events__btn--check">Check out for more events...</a></div>';
+    const readMoreBtn = `<div class="col text-centre"><a href="/events.html" class="btn btn-secondary events__btn events__btn--check">There are ${this.events.length - 6} more events...</a></div>  `;
     if (this.result.getAttribute('name') === 'result-index') {
       this.result.innerHTML += readMoreBtn;
     }

@@ -56,7 +56,7 @@ class Shop {
         <div class="col-6 col-sm-3">
           <figure class="shopping__position shopping__position--${index + 1}">
             <img src="./assets/img/${subjectType}-${number}.jpg" alt="{${subjectType}.${number}} ${subjectType}" class="shopping__img" title="{${subjectType}.${number}}">
-            <p class="shopping__category">{${subjectType}.${number}}</p>
+            <figaption class="shopping__category">{${subjectType}.${number}}</figaption>
           </figure>
         </div>
       `;

@@ -3,7 +3,7 @@ const server = require('../bin/server');
 const app = {};
 
 app.init = () => {
-  // Uruchamianie servera
+  // Start the server
   server.init();
 };
 

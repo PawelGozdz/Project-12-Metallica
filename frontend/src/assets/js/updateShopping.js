@@ -11,10 +11,10 @@ function updateShopping() {
     .map(str => str.split('.'));
 
   const fetchArr = [];
-  // Start all 16 promises at once and requesting data from DB
+  // Start promises at once and requesting data from DB
   modifyArr.forEach(ele => fetchArr.push(fetch(`/?${ele[0]}=${ele[1]}`)));
 
-  // Returning all data at the same tie
+  // Returning all data at the same time
   const runPromises = Promise.all([...fetchArr]);
   runPromises.then(response => response.map(val => val.json()))
     .then((values) => {
@@ -66,7 +66,7 @@ function updateShopping() {
         }
 
         // element.textContent = el.replace(el, `${data[el].category}`);
-        
+
         // Truncating song title if it's too long
         const trimmedTitle = data[el].category
           .split(' ')

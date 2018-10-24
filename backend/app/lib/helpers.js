@@ -8,7 +8,7 @@ const config = require('../../secret/config');
 
 const helpers = {};
 
-// Przekazywanie stringu JSON i przerabianie go na obiekt, bez wywalania erroru w aplikacji
+// Passing JSON string and parsing it into an object
 helpers.parseJsonToObject = (str) => {
   try {
     const obj = JSON.parse(str);
@@ -17,37 +17,6 @@ helpers.parseJsonToObject = (str) => {
     return {};
   }
 };
-
-// Print on the page dynamically records 
-// helpers.printDynamicRecords = (dbRecs = [], element = 'div', attributes = '') => {
-//   /**
-//    * dbRecs - array with records from DB
-//    * element - element to create
-//    * attributes - attributes to assign
-//    */
-
-//    // Each element from dbRecs might have different href, src etc
-//   let attrList = '';
-
-//   for (const attr in attributes) {
-//     attrList += ` ${attr}="${attributes[attr]}"`;
-//   }
-  
-//   return dbRecs.reduce((acc, val, i, ar) => {
-//     // Base on number elements from [], loop over and create appropriate element using template literals
-
-//     acc += `
-//       <${element}${attrList}>
-//         ${typeof (val) === 'object' ? Object.keys(val).map(key => val[key]) : val}
-//       </${element}>`;
-//     return acc;
-//   }, '');
-// };
-
-// const arr = [{ song: 'Hit the Lights', album: 'Reload' }, { song: 'The Four Horsemen' }, { song: 'Jump in the Fire' }, { song: 'Whiplash' }];
-// // const arr = ['Hit the Lights', 'The Four Horsemen'];
-// const test = helpers.printDynamicRecords(arr, 'div', { class: 'open', type: 'submit', href: '' });
-// console.log(test);
 
 // Reading template
 helpers.getTemplate = (templateName, data, callback) => {
@@ -61,44 +30,44 @@ helpers.getTemplate = (templateName, data, callback) => {
         const finalString = helpers.interpolate(str, data);
         callback(false, finalString);
       } else {
-        callback('Error, Nie udało się załadować templatki! Sprawdź czy taka istnieje.');
+        callback('Error, Couldn\'t read the template. Check if exists.');
       }
     });
   } else {
-    callback('Error: Nazwa templatki nie została określona!');
+    callback(`Error: No "${templateName}" template!`);
   }
 };
 
-// Dodawanie defaultowego headera i footera do stringa. 
-// Dostarczanie danych z obiektu do footera i headera do interpolacji
+// Adding default header & footer
+// Passing data from object for footer & header interpolation
 helpers.addUniversalTemplates = (str, data, callback) => {
   str = typeof (str) === 'string' && str.length > 0 ? str : '';
   data = typeof (data) === 'object' && data !== null ? data : {};
 
-  // Ładowanie headera
+  // Reading the HEADER
   helpers.getTemplate('_header', data, (error, headerString) => {
     if (!error && headerString) {
-      // Ładowanie footera
+      // Reading the FOOTER
       helpers.getTemplate('_footer', data, (err, footerString) => {
         if (!err && footerString) {
           const fullString = `${headerString}${str}${footerString}`;
           callback(false, fullString);
         } else {
-          callback('Template "_footer" nie został znaleziony!');
+          callback('No "_footer" template!');
         }
       });
     } else {
-      callback('Template "_header" nie został znaleziony!');
+      callback('No "_header" template!');
     }
   });
 };
 
-// Znajdowanie oraz podmiana przekazanych stringów z obiektem data i jego keys i values
+// Interpolating variables
 helpers.interpolate = (str, data) => {
   str = typeof (str) === 'string' && str.length > 0 ? str : '';
   data = typeof (data) === 'object' && data !== null ? data : {};
 
-  // Dodanie zmiennych globalnych
+  // Adding global variables
   const globals = config.templateGlobals;
 
   Object.entries(globals).forEach((el) => {
@@ -106,20 +75,22 @@ helpers.interpolate = (str, data) => {
     data[`global.${key}`] = val;
   });
 
-  // Dla każdego key w data Object, chcemy podmienić jego value do stringa w odpowiadające miejsce
+  // For each key in 'data' Object, we want to swap its value for string with the new value
 
   Object.entries(data).forEach((el) => {
     const [key, val] = el;
-    if (typeof (key) === 'string') { str = str.replace(`{${key}}`, val); }
+    if (typeof (key) === 'string') str = str.replace(`{${key}}`, val);
   });
 
   return str;
 };
 
-// Pobieranie plików (css, js, img etc) js/index.js
+// Getting (css, js, img etc) files
 helpers.getStaticAssets = (fileName, callback) => {
-  // Background-image kompilowane w scss, dostają dodatkowy przedrostek assets/css,
-  // który powoduje błąd w pobieraniu tych zdjęć
+  // There were some issues with compiling SCSS and loading background images
+  // as there were getting an extra assets/css path name
+  // therefore some extra check needs to be done in case if exists
+
   fileName = fileName.indexOf('css/assets/img') > -1 ? fileName.replace('css/assets/img', 'img') : fileName;
   fileName = typeof (fileName) === 'string' && fileName.length > 0 ? fileName : false;
 
@@ -130,7 +101,7 @@ helpers.getStaticAssets = (fileName, callback) => {
       if (!err && data) {
         callback(false, data);
       } else {
-        callback('Nie znaleziono pliku');
+        callback('File not found!');
       }
     });
   }
