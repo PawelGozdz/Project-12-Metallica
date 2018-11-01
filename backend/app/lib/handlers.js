@@ -9,15 +9,13 @@ const handlers = {};
  */
 
 // Index page + shopping section
-handlers.index = (data, callback) => {
-  // Rejecting other than GET methods
+// Rejecting other than GET methods
+  handlers.index = (data, callback) => {
   if (data.method === 'get') {
-    // Determine between loading whole index page
-    // or updating 'shopping' section with variables from DB
-    console.log(data.queryStringObject);
-    if (Object.keys(data.queryStringObject).length > 0) {
+    // It runs when url has only 1 parameter (query single record from db)
+    if (Object.keys(data.queryStringObject).length === 1) {
       new Promise((resolve, reject) => {
-        dataModify.readVariablesForDynamicContent(data, (text, dbData) => {
+        dataModify.readSpecificItemFromDB(data, (text, dbData) => {
           if (dbData) {
             resolve(dbData);
           } else {
@@ -29,9 +27,29 @@ handlers.index = (data, callback) => {
           callback(200, dbdata[0], 'json');
         })
         .catch(errr => console.log(Error(errr)));
-
+      
+      // It runs, when request has more than 1 parameter
+    } else if (Object.keys(data.queryStringObject).length > 1) {
+      new Promise((resolve, reject) => {
+        dataModify.readMultipleRecordsFromDB(data.queryStringObject, (text, dbData) => {
+          if (dbData) {
+            resolve(dbData);
+          } else {
+            reject(dbData);
+          }
+        });
+      })
+      .then((dbdata) => {
+        dbdata = typeof (dbdata) === 'string'
+          ? 'No records for these cryterias'
+          : dbdata;
+        // console.log(dbdata);
+          callback(200, dbdata, 'json');
+        })
+        .catch(errr => console.log(Error(errr)));
     } else {
       // It runs if no parameters in URL (index.html)
+      // Quering regular variables which are placed in html
       new Promise((resolve, reject) => {
         // Rading specific page variables from DB
         dataModify.readRegularVariablesFromDB('metallicadb', 'index', (text, dbData) => {
@@ -148,7 +166,7 @@ handlers.assets = (data, callback) => {
           if (trimmedAssetName.indexOf('.ico') > -1) {
             contentType = 'favicon';
           }
-
+          
           // Returning the file
           callback(200, dataa, contentType);
         } else {

@@ -42,4 +42,9 @@ function toggleLetterInSequence(item, index) {
   }, index * 200);
 }
 
-export { glowing, expandListItems };
+function dropdowns(e) {
+  e.preventDefault();
+  e.target.classList.toggle('open');
+}
+
+export { glowing, expandListItems, dropdowns };

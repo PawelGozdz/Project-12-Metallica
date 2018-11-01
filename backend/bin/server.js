@@ -54,7 +54,7 @@ server.unifiedServer = (req, res) => {
       headers,
       payload: helpers.parseJsonToObject(buffer)
     };
-
+    
     // Passing the 'request data' object to the hahndler
     chosenHandler(data, (statusCode, payload, contentType) => {
       /**

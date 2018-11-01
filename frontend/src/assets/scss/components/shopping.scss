@@ -29,11 +29,6 @@
       transform: scale(1.1);
     }
 
-    // &:target,
-    // &:active {
-    //   background: red;
-    // }
-    
     @include respond(tab-port) {
       font-size: 1.3rem;
       padding: $sp-2 $sp-3;
@@ -71,14 +66,195 @@
 
   &__container {
     min-height: 8rem;
-    margin-top: $sp-3;
+    margin-top: $sp-1;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
     
-    @include respond(tab-port) {
-      margin-top: $sp-4;
+    @include respond(tab-land) {
+      margin-top: $sp-2;
+      flex-direction: row;
 
     }
   }
 
+  // Shop section
+
+  &__dropdowns,
+  &__content {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: $sp-1;
+    padding-top: $sp-2;
+  }
+
+  &__dropdowns {
+    width: 100%;
+    flex-direction: column;
+    
+    & > * :not(:last-child) {
+      margin-right: $sp-1;
+    }
+    
+    @include respond(tab-land) {
+      flex-direction: row;
+    }
+  }
+  
+  &__dropdownToggle {
+    display: block;
+    padding: $sp-1 $sp-2;
+    background-color: $white;
+    color: $dark;
+    border: 2px solid $dark;
+    border-radius: 5px;
+    transition: all .2s;
+    cursor: pointer;
+    margin-bottom: $sp-1;
+
+    &, & + * {
+      width: 100%; 
+      
+      @include respond(tab-land) {
+        width: 11rem; 
+      }
+    }
+    
+    &.open {
+      background-color: $secondary;
+      // color: $white;
+      border: 2px solid transparent;
+    }
+
+    &.open + .shopping__dropdown {
+      display: block;
+    }
+
+    &::after {
+      content: '\0394';
+      display: inline-block;
+      margin-left: $sp-1;
+      transform: rotate(180deg);
+      transition: all .1s;
+    }
+    
+    &.open::after {
+      transform: rotate(0);
+    }
+  }
+
+  &__box {
+    position: relative;
+
+  }
+
+  &__dropdown {
+    display: none;
+    position: relative;
+    max-height: 10rem;
+    // top: .5rem;
+    left: 0;
+    margin-bottom: $sp-1;
+    z-index: 100;
+    padding: $sp-2 $sp-1;
+    background-color: $secondary;
+    overflow-y: scroll;
+    
+    @include respond(tab-land) {
+      position: absolute;
+      max-height: 13rem;
+      // top: 2rem;
+    }
+
+    input {
+      margin-right: $sp-1;
+    }
+
+    label {
+      display: block;
+      font-size: .9rem;
+      margin: $sp-1 0;
+      border: 1px solid $white;
+      border-radius: 5px;
+      padding: $sp-1;
+
+      &:hover {
+        background-color: darken($secondary, 5%);
+      }
+
+      & > span {
+        display: inline-block;
+        height: 1.6rem;
+        width: 1.6rem;
+      }
+      img {
+        height: 100%;
+        width: 100%;
+        margin-left: .4rem;
+      }
+    }
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__components {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-start;
+    margin-bottom: $sp-2;
+    
+    @include respond(tab-port) {
+      margin-bottom: $sp-3;
+      margin-right: $sp-3;
+    }
+  }
+
+  &__component {
+    display: flex;
+    padding: $sp-1;
+    max-height: 3.3rem;
+    align-items: center;
+    margin-right: $sp-2;
+
+    & img {
+      max-width: 2.6rem;
+      margin-right: $sp-1;
+    }
+  }
+
+  &__summary {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: auto;
+    border-bottom: 1px double $dark;
+
+    h4 {
+      margin-bottom: 0;
+    }
+
+    & > p {
+      margin-bottom: 0;
+    }
+  }
+
+  [id|="summary"] {
+    display: inline-block;
+    margin: 0 .1rem;
+    font-weight: bold;
+    background: $light;
+    padding: 1px 3px;
+    // vertical-align: baseline;
+  }
+
+  // Shop section ends
+
+  // Most Popular section
   &__position {
     margin-left: $sp-2;
 
@@ -122,6 +298,7 @@
       max-width: 7rem;
     }
   }
+  // Most Popular section
 
   // Body ends  
 }
