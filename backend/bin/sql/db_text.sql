@@ -53,19 +53,19 @@ CREATE TABLE gender(
 
 CREATE TABLE types(
   id SERIAL PRIMARY KEY,
-  "subCat" VARCHAR(20)
+  "type" VARCHAR(20)
 );
 
 CREATE TABLE clothes(
   id SERIAL PRIMARY KEY NOT NULL,
   cloth VARCHAR NOT NULL,
-  "subCatId" INTEGER NOT NULL,
+  "typeId" INTEGER NOT NULL,
   "sizeId" INTEGER NOT NULL,
   "genderId" INTEGER NOT NULL,
   "albumId" INTEGER NOT NULL,
   quantity INTEGER NOT NULL,
   price DECIMAL NOT NULL,
-  FOREIGN KEY ("subCatId") REFERENCES types(id),
+  FOREIGN KEY ("typeId") REFERENCES types(id),
   FOREIGN KEY ("sizeId") REFERENCES sizes(id),
   FOREIGN KEY ("genderId") REFERENCES gender(id),
   FOREIGN KEY ("albumId") REFERENCES albums(id)
@@ -251,7 +251,7 @@ INSERT INTO other(other,"albumId", quantity, price)
 INSERT INTO gender(sex)
   VALUES('M'),('W'),('U');
 
-INSERT INTO types("subCat")
+INSERT INTO types("type")
   VALUES('shirt'),
         ('trousers'),
         ('jacket'),
@@ -259,7 +259,7 @@ INSERT INTO types("subCat")
         ('hat'),
         ('hoodie');
 
-INSERT INTO clothes(cloth, "subCatId", "sizeId", "genderId", "albumId", quantity, price)
+INSERT INTO clothes(cloth, "typeId", "sizeId", "genderId", "albumId", quantity, price)
   VALUES('Master of puppers shirt', 1, 1, 3, 3, 12, 19.99),
         ('Master of puppers shirt', 1, 2, 3, 3, 8, 19.99),
         ('Master of puppers shirt', 1, 3, 3, 3, 9, 19.99),

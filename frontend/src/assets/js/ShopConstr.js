@@ -17,9 +17,12 @@ class SHOP {
   async initiateStaticDropdown() {
     try {
       const fetchAlbums = fetch('/?category=album&album=all');
-      const fetchClothes = fetch('/?category=cloth&cloth=all');
+      const fetchType = fetch('/?category=type&type=all');
+      const fetchSize = fetch('/?category=size&size=all');
+      const fetchGender = fetch('/?category=sex&sex=all');
+      // const fetchClothes = fetch('/?category=cloth&cloth=all');
       const fetchOther = fetch('/?category=other&other=all');
-      this.initiate = Promise.all([fetchAlbums, fetchClothes, fetchOther])
+      this.initiate = Promise.all([fetchAlbums, fetchType, fetchSize, fetchGender, fetchOther])
       // this.initiate = await new Promise((resolve, reject) => {
       //   const fetchAlbums = fetch('/?category=album&album=all');
       //   // const fetchClothes = fetch('/?category=cloth&cloth=all');
@@ -47,7 +50,7 @@ class SHOP {
     }
   }
 
-  // Initiate 'album' dropdown
+  // Initiate dropdowns
   async queryForDropdowns(e) {
     /**
      * SCHEMA
@@ -56,7 +59,7 @@ class SHOP {
      * 
      * ALBUMS - albums load with page start
      * SONGS - album.id needed
-     * CLOTH - subCat(shirt, jacket etc), size ('S', 'M' etc) & sex ('M', 'W', 'U')
+     * CLOTH - type(shirt, jacket etc), size ('S', 'M' etc) & sex ('M', 'W', 'U')
      * OTHER - no parameters needed
      */
     const curCheckbox = e.target ? e.target : '';
@@ -88,7 +91,7 @@ class SHOP {
       /**
        * EXAMPLE URL: http://localhost:3000/?category=album&album=all
        * Grab all 'checked elements' and add them to the DOM
-       * Add to the 'selected' {}
+       * Add to the 'selected' & 'list' {}
        * * Unchecked remove
        */
 
@@ -97,7 +100,7 @@ class SHOP {
       /**
        * EXAMPLE URL: http://localhost:3000/?category=song&album=2
        * Grab all 'albums' which are checked, and query songs based on that
-       * Add to the 'selected' {}
+       * Add to the 'selected' & 'list' {}
        * Add checked songs to the DOM
        * Unchecked remove
        */
@@ -108,35 +111,39 @@ class SHOP {
 
     // if section === cloth, query based on selected and add them to the obj/arr which will insert inputs
       /**
-       * EXAMPLE URL: http://localhost:3000/?category=cloth&subCat=jacket&size=M&sex=M
+       * EXAMPLE URL: http://localhost:3000/?category=cloth&type=jacket&size=M&sex=M
        * Display all categories in dropdowns
        * If at least 1 input is checked in each dropdown, query
        * If there is more than 1 checked in each dropdown, query more than ones using other dropdown inputs for url build
-       * Add to the 'selected' {}
+       * Add to the 'selected' & 'list' {}
        * Add checked to the DOM
        * Unchecked remove
        */
 
       if (this.curCategory === 'cloth') {
-        this.queryUrl = `/?category=${this.curCategory}&subCat=${curValue.split('.')[1]}&size=M&sex=M`;
+        this.queryUrl = `/?category=${this.curCategory}&type=${curValue.split('.')[1]}&size=M&sex=M`;
       }
 
     // if section === other, query and add to obj/arr
       /**
        * EXAMPLE URL: http://localhost:3000/?category=other&other=all
-       * Add to the 'selected' {}
+       * Add to the 'selected' & 'list' {}
        * Add checked to the DOM
        * Unchecked remove
        */
     //
 
     // Build URL
-    this.currentQuery = await new Promise((resolve, reject) => {
-      const fetchData = fetch(this.queryUrl);
-      
-      return resolve(fetchData);
-    })
-      .then(data => data.json());
+    if (this.queryUrl) {
+      this.currentQuery = await new Promise((resolve, reject) => {
+        const fetchData = fetch(this.queryUrl);
+        
+        return resolve(fetchData);
+      })
+        .then(data => data.json());
+    } else {
+      this.currentQuery = {Error: 'Not valid query'};
+    }
 
     // const returnPromise = await this.currentQuery;
       // .then((dbData) => {
@@ -195,8 +202,9 @@ class SHOP {
   // DONE
 
   // Kazdy 'checked' dodac do obietku THIS.LIST z categoriami / albums / songs / cothes / other
-
+  // DONE
   // Po wybraniu, wysylac requesty i pobrac recordy z DB
+  // DONE
 
   // Recordy dodac do inputow z subcategoriami (jezeli istnieja, np clothes, songs)
 

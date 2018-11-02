@@ -24,9 +24,12 @@ lib.readSpecificItemFromDB = (data, callback) => {
   const albums = key === 'album' ? 'albums' : '';
   const songs = key === 'song' ? 'songs' : '';
   const clothes = key === 'cloth' ? 'clothes' : '';
+  const sizes = key === 'size' ? 'sizes' : '';
+  const gender = key === 'sex' ? 'gender' : '';
+  const types = key === 'type' ? 'types' : '';
   const other = key === 'other' ? 'other' : '';
-  const category = (albums || songs || clothes || other) !== undefined
-    ? (albums || songs || clothes || other)
+  const category = (albums || songs || clothes || sizes || gender || types || other) !== undefined
+    ? (albums || songs || clothes || sizes || gender || types || other)
     : '';
 
   // Query depends of category
@@ -48,6 +51,15 @@ lib.readSpecificItemFromDB = (data, callback) => {
     WHERE clothes.id = $1`;
   }
 
+  if (category === 'sizes') {
+    sql = 'SELECT * FROM sizes WHERE id = $1';
+  }
+  if (category === 'gender') {
+    sql = 'SELECT * FROM gender WHERE id = $1';
+  }
+  if (category === 'types') {
+    sql = 'SELECT * FROM types WHERE id = $1';
+  }
   if (category === 'other') {
     sql = 'SELECT id, other, quantity FROM other WHERE id = $1';
   }
@@ -93,9 +105,12 @@ lib.readMultipleRecordsFromDB = (data, callback) => {
   const albums = data.category === 'album' ? 'albums' : '';
   const songs = data.category === 'song' ? 'songs' : '';
   const clothes = data.category === 'cloth' ? 'clothes' : '';
+  const sizes = data.category === 'size' ? 'sizes' : '';
+  const gender = data.category === 'sex' ? 'gender' : '';
+  const types = data.category === 'type' ? 'types' : '';
   const other = data.category === 'other' ? 'other' : '';
-  const category = (albums || songs || clothes || other) !== undefined
-    ? (albums || songs || clothes || other)
+  const category = (albums || songs || clothes || sizes || gender || types || other) !== undefined
+    ? (albums || songs || clothes || sizes || gender || types || other)
     : '';
 
   // Query depends of category
@@ -121,23 +136,41 @@ lib.readMultipleRecordsFromDB = (data, callback) => {
   // Query cloth based on several conditions
   if (category === 'clothes') {
     // Setting defaults up
-    data.subCat = data.subCat ? data.subCat : 'shirt';
-    data.size = data.size ? data.size : 'L';
+    data.type = data.type ? data.type : 'shirt';
+    data.size = data.size ? data.size : 'M';
     data.sex = data.sex ? data.sex : 'U';
-    sql = `SELECT clothes.id, cloth, "subCat", size, sex, "albumId", clothes.quantity, clothes.price FROM clothes
-          INNER JOIN types ON clothes."subCatId" = types.id
+    sql = `SELECT clothes.id, cloth, "type", size, sex, "albumId", clothes.quantity, clothes.price FROM clothes
+          INNER JOIN types ON clothes."typeId" = types.id
           INNER JOIN sizes ON clothes."sizeId" = sizes.id
           INNER JOIN gender ON clothes."genderId" = gender.id
           INNER JOIN albums ON clothes."albumId" = albums.id
-          WHERE types."subCat" = $1
+          WHERE types."type" = $1
           AND sizes.size = $2
           AND gender.sex = $3`;
-    vars = [data.subCat, data.size, data.sex];
+    vars = [data.type, data.size, data.sex];
+  }
+
+  // Query Size
+  if (category === 'sizes') {
+    sql = 'SELECT * FROM sizes';
+    vars = [];
+  }
+
+  // Query Gender
+  if (category === 'gender') {
+    sql = 'SELECT * FROM gender';
+    vars = [];
+  }
+
+  // Query Types
+  if (category === 'types') {
+    sql = 'SELECT * FROM types';
+    vars = [];
   }
 
   // Query Other
   if (category === 'other') {
-    sql = `SELECT * FROM other`;
+    sql = 'SELECT * FROM other';
     vars = [];
   }
 
