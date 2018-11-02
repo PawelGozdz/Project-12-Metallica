@@ -17,9 +17,9 @@ class SHOP {
   async initiateStaticDropdown() {
     try {
       const fetchAlbums = fetch('/?category=album&album=all');
-      const fetchType = fetch('/?category=type&type=all');
-      const fetchSize = fetch('/?category=size&size=all');
-      const fetchGender = fetch('/?category=sex&sex=all');
+      // const fetchType = fetch('/?category=type&type=all');
+      // const fetchSize = fetch('/?category=size&size=all');
+      // const fetchGender = fetch('/?category=sex&sex=all');
       // const fetchClothes = fetch('/?category=cloth&cloth=all');
       const fetchOther = fetch('/?category=other&other=all');
       this.initiate = Promise.all([fetchAlbums, fetchType, fetchSize, fetchGender, fetchOther])
@@ -120,9 +120,9 @@ class SHOP {
        * Unchecked remove
        */
 
-      if (this.curCategory === 'cloth') {
-        this.queryUrl = `/?category=${this.curCategory}&type=${curValue.split('.')[1]}&size=M&sex=M`;
-      }
+      // if (this.curCategory === 'cloth') {
+      //   this.queryUrl = `/?category=${this.curCategory}&type=${curValue.split('.')[1]}&size=M&sex=M`;
+      // }
 
     // if section === other, query and add to obj/arr
       /**

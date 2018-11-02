@@ -40,17 +40,17 @@ async function main() {
   // // Inserting dropdown elements into 'album' dropdowns in sections 'album' and 'song'
   insertIntoHTML(albumStr, ['album', 'song'], 'album');
   // Build Type dropdown
-  const typeStr = await buildDropdowns(initialList[1], 'type');
-  // Insert into type
-  insertIntoHTML(typeStr, ['cloth'], 'type');
-  // Build Size dropdown
-  const sizeStr = await buildDropdowns(initialList[2], 'size');
-  // Insert into size
-  insertIntoHTML(sizeStr, ['cloth'], 'size');
-  // Build Gender dropdown
-  const genderStr = await buildDropdowns(initialList[3], 'sex');
-  // Insert into gender
-  insertIntoHTML(genderStr, ['cloth'], 'sex');
+  // const typeStr = await buildDropdowns(initialList[1], 'type');
+  // // Insert into type
+  // insertIntoHTML(typeStr, ['cloth'], 'type');
+  // // Build Size dropdown
+  // const sizeStr = await buildDropdowns(initialList[2], 'size');
+  // // Insert into size
+  // insertIntoHTML(sizeStr, ['cloth'], 'size');
+  // // Build Gender dropdown
+  // const genderStr = await buildDropdowns(initialList[3], 'sex');
+  // // Insert into gender
+  // insertIntoHTML(genderStr, ['cloth'], 'sex');
   // Build Results dropdown
   // const clothStr = await buildDropdowns(initialList[4], 'cloth');
   // Insert into cloth

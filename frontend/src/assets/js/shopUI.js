@@ -21,8 +21,8 @@ async function buildDropdowns(data, curCategory) {
     let imgCat;
     let imgNum;
     
-    imgCat = curCategory === 'cloth' || curCategory === 'song' ? 'album' : curCategory;
-    imgNum = curCategory === 'cloth' || curCategory === 'song' ? val.albumId : val[key];
+    // imgCat = curCategory === 'cloth' || curCategory === 'song' ? 'album' : curCategory;
+    // imgNum = curCategory === 'cloth' || curCategory === 'song' ? val.albumId : val[key];
     
     // console.log('2...imgCat', imgCat, 'imgNum', imgNum);
     // imgCat = curCategory === 'cloth' ? 'cloth' : curCategory;
@@ -32,7 +32,7 @@ async function buildDropdowns(data, curCategory) {
 
     // Categories 'type', 'size' and 'gender, don't need image
     // const ab = curCategory === ('type', 'sex', 'size')
-    if (curCategory === 'size' || curCategory === 'sex') image = '';
+    // if (curCategory === 'size' || curCategory === 'sex') image = '';
     // console.log('link:', image);
     // if (curCategory === 'song') const { id, song, albumId, album, price } = val;
     // Choosing category
