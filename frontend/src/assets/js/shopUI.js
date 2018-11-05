@@ -5,7 +5,6 @@ async function buildDropdowns(data, curCategory) {
   /**
    * Album - img src as album
    * Song - img src as album cover(don't have song pictures)
-   * Cloth - img src as one of 7 available pictures or cloth-0 as default
    * Other - img src as one of 6 available pictures
    */
 

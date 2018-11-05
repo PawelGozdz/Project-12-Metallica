@@ -1,5 +1,3 @@
-// import '../scss/main.scss';
-// import 'bootstrap';
 import { glowing, expandListItems, dropdowns } from './cssEffects';
 import { asideMenu, asideSlider } from './asideMenu';
 import { Event } from './EventApi';
@@ -40,22 +38,6 @@ async function main() {
   const albumStr = await buildDropdowns(initialList[0], 'album');
   // // Inserting dropdown elements into 'album' dropdowns in sections 'album' and 'song'
   insertIntoHTML(albumStr, ['album', 'song']);
-  // Build Type dropdown
-  // const typeStr = await buildDropdowns(initialList[1], 'type');
-  // // Insert into type
-  // insertIntoHTML(typeStr, ['cloth'], 'type');
-  // // Build Size dropdown
-  // const sizeStr = await buildDropdowns(initialList[2], 'size');
-  // // Insert into size
-  // insertIntoHTML(sizeStr, ['cloth'], 'size');
-  // // Build Gender dropdown
-  // const genderStr = await buildDropdowns(initialList[3], 'sex');
-  // // Insert into gender
-  // insertIntoHTML(genderStr, ['cloth'], 'sex');
-  // Build Results dropdown
-  // const clothStr = await buildDropdowns(initialList[4], 'cloth');
-  // Insert into cloth
-  // insertIntoHTML(clothStr, ['cloth']);
   // // Build Other dropdown
   const otherStr = await buildDropdowns(initialList[1], 'other');
   // Insert into other
@@ -76,12 +58,7 @@ async function queryForSpecificSection(e) {
   // It returns new shop.list
   const modifydropdowns = await shop.queryForDropdowns(e);
 
-  // console.log('shop', shop);
-  // console.log('shop.list', shop.list);
-  // console.log('modifydropdowns', modifydropdowns);
-  // console.log('shop.selected', shop.selected);
   const curListCategory = await modifydropdowns[shop.curCategory];
-  // console.log('shop.list[shop.curCategory', shop.list[shop.curCategory]);
 
   const newArray = [];
   if (shop.curCategory === 'song') {
@@ -106,19 +83,9 @@ async function queryForSpecificSection(e) {
         .filter(each => each[0].includes('song'))
         // Concatenating multiple arrays from song section
         .forEach((arr) => {
-          // console.log('Select to', arr);
           document.querySelector(`input[value="${arr[0]}"]`).checked = true;
-          // arr[1].checked = true;
-          // arr[1].style.color = 'red';
         });
     }
-    
-    // .filter(onlyArray => !Array.isArray(onlyArray[1]))
-    // .forEach(i => {
-    //   // if (i[0].includes('song')) i[0].checked;
-    //   console.log('Checking selected', i);
-    //   i.checked;
-    // });
   }
   // Passing shop.list for display
   displayInTheDom(modifydropdowns);
@@ -130,15 +97,7 @@ async function queryitem(e) {
 }
 
 function runApi() {
-  // Print categories list to the <select> (if exists)
-  // event.getCategoriesAPI()
-  //   .then((list) => {
-  //     // Printing categories
-  //     eventUi.printCategories(list);
-  //   });
-
   // Read the values if input exists. If not assign defaults
-  // let eventName = '';
   const eventName = document.querySelector('#event-name') !== null
     ? document.querySelector('#event-name').value
     : 'Metallica';

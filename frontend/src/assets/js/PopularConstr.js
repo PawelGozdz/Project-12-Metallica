@@ -3,7 +3,6 @@ class Popular {
     this.displayRecords = 4;
     this.topAlbums = this.assignarray(this.displayRecords, 11) || [];
     this.topSongs = this.assignarray(this.displayRecords, 133) || [];
-    this.topClothes = this.assignarray(this.displayRecords, 7) || [];
     this.topOther = this.assignarray(this.displayRecords, 6) || [];
   }
 
@@ -33,15 +32,14 @@ class Popular {
   }
 
   displayRandomRecords() {
-    // Grapping all tabs together (albums, songs, clothes, other)
+    // Grapping all tabs together (albums, songs, other)
     const shoppingBottom = Array.from(document.querySelectorAll('.shopping__body .shopping__bottom .row'));
 
     shoppingBottom.forEach((tab, index) => {
       let builtString = '';
       if ((index + 1) === 1) builtString = this.buildRandomDisplay(this.topAlbums, 'album');
       if ((index + 1) === 2) builtString = this.buildRandomDisplay(this.topSongs, 'song');
-      if ((index + 1) === 3) builtString = this.buildRandomDisplay(this.topClothes, 'cloth');
-      if ((index + 1) === 4) builtString = this.buildRandomDisplay(this.topOther, 'other');
+      if ((index + 1) === 3) builtString = this.buildRandomDisplay(this.topOther, 'other');
 
       tab.innerHTML = builtString;
     });
