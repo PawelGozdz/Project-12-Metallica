@@ -68,8 +68,13 @@ function insertIntoHTML(str, categoryTab, subCategory = false) {
    */
   // console.log('STRING', str);
   // console.log('GRAB', document.querySelector(`#${categoryTab} .shopping__dropdown--${categoryTab}`));
-  categoryTab.forEach(element => document.querySelector(`#${element} .shopping__dropdown--${subCategory || categoryTab}`).innerHTML = str);
+  categoryTab.forEach((element) => {
+    if (document.querySelector(`#${element} .shopping__dropdown--${subCategory || categoryTab}`)) {
+      document.querySelector(`#${element} .shopping__dropdown--${subCategory || categoryTab}`).innerHTML = str;
+    }
+  });
 }
+
 
 function displayInTheDom(list) {
   // Print summary

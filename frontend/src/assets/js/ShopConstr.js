@@ -1,15 +1,14 @@
 class SHOP {
   constructor() {
-    this.selected = {
-      album: {},
-      song: {},
-      cloth: {},
-      other: {}
-    };
+    // this.selected = {
+    //   album: {},
+    //   song: {},
+    //   cloth: {},
+    //   other: {}
+    // };
     this.list = {
       album: {},
       song: {},
-      // cloth: {},
       other: {}
     };
     this.deleteItem = '';
@@ -19,33 +18,14 @@ class SHOP {
   async initiateStaticDropdown() {
     try {
       const fetchAlbums = fetch('/?category=album&album=all');
-      // const fetchType = fetch('/?category=type&type=all');
-      // const fetchSize = fetch('/?category=size&size=all');
-      // const fetchGender = fetch('/?category=sex&sex=all');
-      // const fetchClothes = fetch('/?category=cloth&cloth=all');
       const fetchOther = fetch('/?category=other&other=all');
       this.initiate = Promise.all([fetchAlbums, fetchOther])
-      // this.initiate = await new Promise((resolve, reject) => {
-      //   const fetchAlbums = fetch('/?category=album&album=all');
-      //   // const fetchClothes = fetch('/?category=cloth&cloth=all');
-      //   // const fetchOther = fetch('/?category=other&other=all');
-      //   return resolve(fetchAlbums);
-      // })
         .then(response => response.map(val => val.json()))
         .then((values) => {
           const dataArray = [];
           values.map(el => el.then(data => dataArray.push(data)));
-          // values.map(el => console.log('first', el));
-          // values.map(el => el.then(data => console.log('second', data)));
           return dataArray;
         });
-        // .then((values) => {
-        //   const dataArray = [];
-        //   values.map(el => el.then(data => dataArray.push(data)));
-        //   return dataArray;
-        // });
-      // .then(data => data.map(each => each.json()));
-      // .then(album => album.json());
       return this.initiate;
     } catch (e) {
       return Error(e);

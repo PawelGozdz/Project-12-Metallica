@@ -131,11 +131,11 @@ async function queryitem(e) {
 
 function runApi() {
   // Print categories list to the <select> (if exists)
-  event.getCategoriesAPI()
-    .then((list) => {
-      // Printing categories
-      eventUi.printCategories(list);
-    });
+  // event.getCategoriesAPI()
+  //   .then((list) => {
+  //     // Printing categories
+  //     eventUi.printCategories(list);
+  //   });
 
   // Read the values if input exists. If not assign defaults
   // let eventName = '';

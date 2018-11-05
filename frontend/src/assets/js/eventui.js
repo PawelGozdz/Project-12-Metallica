@@ -45,23 +45,23 @@ class EventUI {
   }
 
   // Print categories
-  printCategories(categoriesList) {
-    this.categories = categoriesList.categories.categories;
-    const categoriesSelect = document.querySelector('#category') !== null
-      ? document.querySelector('#category')
-      : undefined;
-    if (categoriesSelect) {
-      this.categories.forEach((category) => {
-        // Create <option>
-        const option = document.createElement('option');
-        option.value = category.id;
-        option.appendChild(document.createTextNode(category.name));
-        categoriesSelect.appendChild(option);
-      });
-    } else {
-      console.log(Error('Category list Error'));
-    }
-  }
+  // printCategories(categoriesList) {
+  //   this.categories = categoriesList.categories.categories;
+  //   const categoriesSelect = document.querySelector('#category') !== null
+  //     ? document.querySelector('#category')
+  //     : undefined;
+  //   if (categoriesSelect) {
+  //     this.categories.forEach((category) => {
+  //       // Create <option>
+  //       const option = document.createElement('option');
+  //       option.value = category.id;
+  //       option.appendChild(document.createTextNode(category.name));
+  //       categoriesSelect.appendChild(option);
+  //     });
+  //   } else {
+  //     console.log(Error('Category list Error'));
+  //   }
+  // }
 
   // Display a message
   printMessage(message, className) {
