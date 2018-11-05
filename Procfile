@@ -1,2 +1,1 @@
-backend: nodemon ./backend/bin/server
-frontend: parcel ./frontend/dist/index.html
+web: node backend/app/index.js

@@ -1,7 +1,7 @@
 {
-  "name": "frontend",
+  "name": "metallica-app",
   "version": "1.0.0",
-  "description": "Metallica website frontend",
+  "description": "Metallica app frontend",
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode development",

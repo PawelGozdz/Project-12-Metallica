@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "metallica-app",
   "version": "1.0.0",
-  "description": "Metallica page backend",
+  "description": "Metallica app backend",
   "main": "./app/index.js",
   "scripts": {
     "start": "node ./bin/server",

@@ -1,7 +1,7 @@
 {
-  "name": "metallica",
+  "name": "metallica-app",
   "version": "1.0.0",
-  "description": "Metallica page",
+  "description": "Metallica app",
   "main": "index.js",
   "scripts": {
     "start": "nf start",
