@@ -55,38 +55,6 @@ module.exports = {
           }
         ]
       }
-      // {
-      //   test: /\.(gif|png|jpe?g|svg)$/i,
-      //   exclude: /fonts/,
-      //   use: [
-      //     'file-loader',
-      //     {
-      //       loader: 'image-webpack-loader',
-      //       options: {
-      //         mozjpeg: {
-      //           progressive: true,
-      //           quality: 65
-      //         },
-      //          name: '/img/[name].[ext]'
-      //         // optipng.enabled: false will disable optipng
-      //         optipng: {
-      //           enabled: false,
-      //         },
-      //         pngquant: {
-      //           quality: '65-90',
-      //           speed: 4
-      //         },
-      //         gifsicle: {
-      //           interlaced: false,
-      //         },
-      //         // the webp option will enable WEBP
-      //         webp: {
-      //           quality: 75
-      //         }
-      //       }
-      //     },
-      //   ],
-      // }
     ]
   },
   plugins: [
@@ -98,12 +66,6 @@ module.exports = {
       filename: './assets/css/style.css'
       // filename: 'css/style.[contenthash].css'
     }),
-    // new HtmlWebpackPlugin({
-    //   inject: false,
-    //   hash: true,
-    //   template: './src/index.html',
-    //   filename: 'index.html'
-    // })
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
@@ -128,6 +90,5 @@ module.exports = {
       template: './src/_footer.html',
       filename: '_footer.html'
     })
-    // new WebpackMd5Hash()
   ]
 };
