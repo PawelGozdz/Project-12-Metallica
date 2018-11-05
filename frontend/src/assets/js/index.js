@@ -2,17 +2,17 @@
 // import 'bootstrap';
 import { glowing, expandListItems, dropdowns } from './cssEffects';
 import { asideMenu, asideSlider } from './asideMenu';
-// import { Event } from './EventApi';
-// import { EventUI } from './EventUI';
+import { Event } from './EventApi';
+import { EventUI } from './EventUI';
 import { topNavbar } from './topNavigation';
 import { shoppingTabs } from './shoppingTabs';
 import { Popular } from './PopularConstr';
 import { updatePopular } from './popularUI';
 import { SHOP } from './ShopConstr';
-import { buildDropdowns, insertIntoHTML } from './shopUI';
+import { buildDropdowns, insertIntoHTML, displayInTheDom } from './shopUI';
 
-// const event = new Event();
-// const eventUi = new EventUI();
+const event = new Event();
+const eventUi = new EventUI();
 const popular = new Popular();
 const shop = new SHOP();
 
@@ -22,7 +22,8 @@ async function main() {
   asideSlider();
   // Run glowing effect
   setInterval(() => glowing(), 1900);
-  // runApi();
+  // Run API
+  runApi();
   // Adding listener to topNavbar
   topNavbar();
   // Run popular section with random numbers
@@ -38,7 +39,7 @@ async function main() {
   // Build albums dropdowns
   const albumStr = await buildDropdowns(initialList[0], 'album');
   // // Inserting dropdown elements into 'album' dropdowns in sections 'album' and 'song'
-  insertIntoHTML(albumStr, ['album', 'song'], 'album');
+  insertIntoHTML(albumStr, ['album', 'song']);
   // Build Type dropdown
   // const typeStr = await buildDropdowns(initialList[1], 'type');
   // // Insert into type
@@ -56,9 +57,9 @@ async function main() {
   // Insert into cloth
   // insertIntoHTML(clothStr, ['cloth']);
   // // Build Other dropdown
-  const otherStr = await buildDropdowns(initialList[4], 'other');
+  const otherStr = await buildDropdowns(initialList[1], 'other');
   // Insert into other
-  insertIntoHTML(otherStr, ['other'], 'gadget');
+  insertIntoHTML(otherStr, ['other'], 'other');
   // Adding listeners to newly inserted 'album' dropdowns and then run function which will retrive the data from DB
   document.querySelectorAll('.shopping__dropdown input[type="checkbox"]').forEach(input => input.addEventListener('change', queryForSpecificSection));
 }
@@ -71,35 +72,61 @@ function eventListeners() {
 }
 
 async function queryForSpecificSection(e) {
-  console.log(shop);
-  // const queryResults = [];
-  await shop.queryForDropdowns(e);
+  // If any dropdown changes within a particular section, query runs again
+  // It returns new shop.list
+  const modifydropdowns = await shop.queryForDropdowns(e);
+
+  // console.log('shop', shop);
+  // console.log('shop.list', shop.list);
+  // console.log('modifydropdowns', modifydropdowns);
+  // console.log('shop.selected', shop.selected);
+  const curListCategory = await modifydropdowns[shop.curCategory];
+  // console.log('shop.list[shop.curCategory', shop.list[shop.curCategory]);
 
   const newArray = [];
+  if (shop.curCategory === 'song') {
+    if (Object.entries(curListCategory).length > 0) {
+      Object.entries(curListCategory)
+        // Filter for array. There can be also object for a specific product (song etc)
+        .filter(onlyArray => Array.isArray(onlyArray[1]))
+        // Concatenating multiple arrays from song section
+        .forEach((arr) => {
+          newArray.push(...arr[1]);
+        });
+    }
 
-  Object.entries(shop.list[shop.curCategory]).forEach(arr => {
-    newArray.push(...arr[1]);
-  });
-  console.log('New Arr', newArray);
-
-  const newHtml = await buildDropdowns(newArray, shop.curCategory);
-  insertIntoHTML(newHtml, [shop.curCategory]);
+    const newHtml = await buildDropdowns(newArray, shop.curCategory);
+    insertIntoHTML(newHtml, [shop.curCategory]);
+    document.querySelectorAll(`.shopping__dropdown--${shop.curCategory}`).forEach(input => input.addEventListener('change', queryitem));
     
-  // Reasign Listeners
-  document.querySelectorAll('.shopping__dropdown input[type="checkbox"]').forEach(input => input.addEventListener('change', queryForSpecificSection));
+    // After new list is displayed, make sure that previously selected songs will be checked
+    if (Object.entries(curListCategory).length > 0) {
+      Object.entries(curListCategory)
+        // Filter for array. There can be also object for a specific product (song etc)
+        .filter(each => each[0].includes('song'))
+        // Concatenating multiple arrays from song section
+        .forEach((arr) => {
+          // console.log('Select to', arr);
+          document.querySelector(`input[value="${arr[0]}"]`).checked = true;
+          // arr[1].checked = true;
+          // arr[1].style.color = 'red';
+        });
+    }
+    
+    // .filter(onlyArray => !Array.isArray(onlyArray[1]))
+    // .forEach(i => {
+    //   // if (i[0].includes('song')) i[0].checked;
+    //   console.log('Checking selected', i);
+    //   i.checked;
+    // });
+  }
+  // Passing shop.list for display
+  displayInTheDom(modifydropdowns);
+}
 
-
-  // console.log('build', build);
-  // values.map(el => el.then(data => dataArray.push(data)));
-  // const query = await buildDropdowns(queryPromise, shop.curCategory);
-  // .then(records => console.log(records));
-  // console.log(await query);
-  // const checkSection = (e) => { shop.queryForDropdowns(e); } !== undefined
-  //   ? (e) => { shop.queryForDropdowns(e); }
-  //   : '';
-  // Query cloth
-
-  // Query other
+async function queryitem(e) {
+  const modifydropdowns = await shop.queryForDropdowns(e);
+  displayInTheDom(modifydropdowns);
 }
 
 function runApi() {

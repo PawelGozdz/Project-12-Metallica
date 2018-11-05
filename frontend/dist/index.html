@@ -65,77 +65,77 @@
 
                   <div class="albums__record">
                     <figure class="albums__cover open" value="1">
-                      <img src="./assets/img/album-1.jpg" alt="Kill'em all album" class="albums__img">
+                      <img src="./assets/img/album-1.jpg" alt="Kill'em all album" title="Kill'em all album" class="albums__img">
                       <figcaption>Kill'em all</figcaption>
                     </figure>
                   </div>
   
                   <div class="albums__record">
                     <figure class="albums__cover open" value="2">
-                      <img src="./assets/img/album-2.jpg" alt="Ride the Lightning album" class="albums__img">
+                      <img src="./assets/img/album-2.jpg" alt="Ride the Lightning album" title="Ride the Lightning" class="albums__img">
                       <figcaption>Ride the Lightning</figcaption>
                     </figure>
                   </div>
   
                   <div class="albums__record">
                     <figure class="albums__cover open" value="3">
-                      <img src="./assets/img/album-3.jpg" alt="Master of Puppets album" class="albums__img">
+                      <img src="./assets/img/album-3.jpg" alt="Master of Puppets album" title="Master of Puppets" class="albums__img">
                       <figcaption>Master of Puppets</figcaption>
                     </figure>
                   </div>
   
                   <div class="albums__record">
                     <figure class="albums__cover open" value="4">
-                      <img src="./assets/img/album-4.jpg" alt="...And Justice For All album" class="albums__img">
+                      <img src="./assets/img/album-4.jpg" alt="...And Justice For All album" title="...And Justice For All" class="albums__img">
                       <figcaption>...And Justice For All</figcaption>
                     </figure>
                   </div>
   
                   <div class="albums__record">
                     <figure class="albums__cover open" value="5">
-                      <img src="./assets/img/album-5.jpg" alt="The Black Album" class="albums__img">
+                      <img src="./assets/img/album-5.jpg" alt="The Black Album" title="The Black Album" class="albums__img">
                       <figcaption>The Black Album</figcaption>
                     </figure>
                   </div>
   
                   <div class="albums__record">
                     <figure class="albums__cover open" value="6">
-                      <img src="./assets/img/album-6.jpg" alt="Load album" class="albums__img">
+                      <img src="./assets/img/album-6.jpg" alt="Load album" title="Load" class="albums__img">
                       <figcaption>Load</figcaption>
                     </figure>
                   </div>
   
                   <div class="albums__record">
                     <figure class="albums__cover open" value="7">
-                      <img src="./assets/img/album-7.jpg" alt="Reload album" class="albums__img">
+                      <img src="./assets/img/album-7.jpg" alt="Reload album" title="Reload" class="albums__img">
                       <figcaption>Reload</figcaption>
                     </figure>
                   </div>
   
                   <div class="albums__record">
                     <figure class="albums__cover open" value="8">
-                      <img src="./assets/img/album-8.jpg" alt="Garage, Inc. album" class="albums__img">
+                      <img src="./assets/img/album-8.jpg" alt="Garage, Inc. album" title="Garage, Inc." class="albums__img">
                       <figcaption>Garage, Inc.</figcaption>
                     </figure>
                   </div>
   
                   <div class="albums__record">
                     <figure class="albums__cover open" value="9">
-                      <img src="./assets/img/album-9.jpg" alt="St. Anger album" class="albums__img">
+                      <img src="./assets/img/album-9.jpg" alt="St. Anger album" title="St. Anger" class="albums__img">
                       <figcaption>St. Anger</figcaption>
                     </figure>
                   </div>
   
                   <div class="albums__record">
                     <figure class="albums__cover open" value="10">
-                      <img src="./assets/img/album-10.jpg" alt="Death Magnetic album" class="albums__img">
+                      <img src="./assets/img/album-10.jpg" alt="Death Magnetic album" title="Death Magnetic" class="albums__img">
                       <figcaption>Death Magnetic</figcaption>
                     </figure>
                   </div>
   
                   <div class="albums__record">
                     <figure class="albums__cover open" value="11">
-                      <img src="./assets/img/album-11.jpg" alt="Hardwired album" class="albums__img">
+                      <img src="./assets/img/album-11.jpg" alt="Hardwired album" title="Hardwired" class="albums__img">
                       <figcaption>Hardwired</figcaption>
                     </figure>
                   </div>
@@ -145,7 +145,7 @@
             <div class="col-md-5">
               <article class="albums__tunes">
                 <h3 class="heading heading__article">List of songs</h3>
-                <p>**Click a cover to display list of songs</p>
+                <p>**Click the cover to display list of songs</p>
 
                 <!-- Kill em all -->
                 <ul class="albums__list" value="1">
@@ -343,7 +343,7 @@
               <ul class="shopping__tabs">
                 <li class="shopping__tab"><a href="#" data-nav="album" class="shopping__choose">Albums</a></li>
                 <li class="shopping__tab"><a href="#" data-nav="song" class="shopping__choose">Songs</a></li>
-                <li class="shopping__tab"><a href="#" data-nav="cloth" class="shopping__choose">Clothes</a></li>
+                <!-- <li class="shopping__tab"><a href="#" data-nav="cloth" class="shopping__choose">Clothes</a></li> -->
                 <li class="shopping__tab"><a href="#" data-nav="other" class="shopping__choose">Other</a></li>
               </ul>
             </nav>
@@ -351,10 +351,10 @@
                     
           <article class="shopping__summary">
             <h4>You have selected:</h4>
-            <p><span id="summary-albums">3</span>album(s)</p>
-            <p><span id="summary-songs">15</span>song(s)</p>
-            <p><span id="summary-clothes">1</span>cloth(es)</p>
-            <p><span id="summary-other">3</span>gadget(s)</p>
+            <p><span class="shopping__summary--album" id="summary-album"></span>album(s)</p>
+            <p><span class="shopping__summary--song" id="summary-song"></span>song(s)</p>
+            <!-- <p><span id="summary-clothes">1</span>cloth(es)</p> -->
+            <p><span class="shopping__summary--other" id="summary-other"></span>gadget(s)</p>
             <!-- <input type="button" class="btn btn-primary" value="Process"> -->
           </article>
 
@@ -428,18 +428,7 @@
                 </div>
                 <div class="shopping__content">
                   <div class="shopping__components">
-                    <figure class="shopping__component">
-                      <img src="./assets/img/album-1.jpg" alt="">
-                      <figcaption>Master of Puppets</figcaption>
-                    </figure>
-                    <figure class="shopping__component">
-                      <img src="./assets/img/album-1.jpg" alt="">
-                      <figcaption>Master of Puppets</figcaption>
-                    </figure>
-                    <figure class="shopping__component">
-                      <img src="./assets/img/album-1.jpg" alt="">
-                      <figcaption>Load</figcaption>
-                    </figure> 
+                     
                   </div>
                 </div>
               </div>
@@ -455,7 +444,7 @@
             </article>
           </div>
 
-          <div class="shopping__body shopping__body--clothes" id="cloth">
+          <!-- <div class="shopping__body shopping__body--clothes" id="cloth">
             <article class="shopping__top">
               <h3 class="heading heading__article">Choose Clothes</h3>
               <div class="shopping__container shopping__container--cloth">
@@ -497,7 +486,7 @@
                 </div>
               </div>
             </article>
-          </div>
+          </div> -->
 
           <div class="shopping__body shopping__body--other" id="other">
             <article class="shopping__top">
@@ -505,9 +494,14 @@
               <div class="shopping__container shopping__container--other">
                 <div class="shopping__box">
                   <span class="shopping__dropdownToggle">Gadgets</span>
-                  <div class="shopping__dropdown shopping__dropdown--gadget">
+                  <div class="shopping__dropdown shopping__dropdown--other">
                     <p>Choose gadget</p>
 
+                  </div>
+                  <div class="shopping__content">
+                    <div class="shopping__components">
+                      
+                    </div>
                   </div>
                 </div>
               </div>

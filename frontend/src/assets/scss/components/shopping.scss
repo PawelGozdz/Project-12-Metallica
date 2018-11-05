@@ -66,13 +66,13 @@
 
   &__container {
     min-height: 8rem;
-    margin-top: $sp-1;
+    margin-top: $sp-2;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     
     @include respond(tab-land) {
-      margin-top: $sp-2;
+      margin-top: $sp-4;
       flex-direction: row;
 
     }
@@ -231,7 +231,7 @@
     flex-wrap: wrap;
     justify-content: flex-end;
     width: 100%;
-    margin-top: auto;
+    margin-top: $sp-2;
     border-bottom: 1px double $dark;
 
     h4 {

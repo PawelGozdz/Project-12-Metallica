@@ -9,11 +9,13 @@ class SHOP {
     this.list = {
       album: {},
       song: {},
-      cloth: {},
+      // cloth: {},
       other: {}
     };
+    this.deleteItem = '';
   }
 
+  // Static dropdowns are the ones, which are loading with page start
   async initiateStaticDropdown() {
     try {
       const fetchAlbums = fetch('/?category=album&album=all');
@@ -22,7 +24,7 @@ class SHOP {
       // const fetchGender = fetch('/?category=sex&sex=all');
       // const fetchClothes = fetch('/?category=cloth&cloth=all');
       const fetchOther = fetch('/?category=other&other=all');
-      this.initiate = Promise.all([fetchAlbums, fetchType, fetchSize, fetchGender, fetchOther])
+      this.initiate = Promise.all([fetchAlbums, fetchOther])
       // this.initiate = await new Promise((resolve, reject) => {
       //   const fetchAlbums = fetch('/?category=album&album=all');
       //   // const fetchClothes = fetch('/?category=cloth&cloth=all');
@@ -50,8 +52,9 @@ class SHOP {
     }
   }
 
-  // Initiate dropdowns
+  // These dropdowns are the ones, which are called after clicking static dropdown (the one mentioned above)
   async queryForDropdowns(e) {
+    // console.log('Pierwszy');
     /**
      * SCHEMA
      * 
@@ -62,9 +65,10 @@ class SHOP {
      * CLOTH - type(shirt, jacket etc), size ('S', 'M' etc) & sex ('M', 'W', 'U')
      * OTHER - no parameters needed
      */
-    const curCheckbox = e.target ? e.target : '';
+    // const curCheckbox = e.target ? e.target : '';
     // console.log(curCheckbox);
-    const curValue = e.target.getAttribute('value');
+      const curValue = e.target.getAttribute('value');
+      // console.log('CUR VALUE', curValue);
     // console.log(curValue);
     const ancestor = e.target.closest('.shopping__body');
     this.curCategory = ancestor.getAttribute('id');
@@ -72,17 +76,18 @@ class SHOP {
     // Succesfull query, add to the object with a list of currently selected elements
 
     // Add to the this.selected if is not present. If it is (which means is going to be unchecked), remove
-    if (!this.selected[this.curCategory][curValue]) {
-      this.selected[this.curCategory][curValue] = e.target;
-    } else {
-      delete this.selected[this.curCategory][curValue];
-      // No DB query when unchecking
-      // this.currentQuery = new Promise((resolve, reject) => {
-      //   return reject([]);
-      // });
-        // .then(album => album.json());;
-      // return this.currentQuery;
-    }
+    // if (!this.selected[this.curCategory][curValue]) {
+    //   this.selected[this.curCategory][curValue] = e.target;
+    // } else {
+    //   // if (this.selected[this.curCategory][curValue])
+    //   delete this.selected[this.curCategory][curValue];
+    //   // No DB query when unchecking
+    //   // this.currentQuery = new Promise((resolve, reject) => {
+    //   //   return reject([]);
+    //   // });
+    //     // .then(album => album.json());;
+    //   // return this.currentQuery;
+    // }
 
     // If section clicked, each input checked add to the buy list
     /** */
@@ -94,6 +99,11 @@ class SHOP {
        * Add to the 'selected' & 'list' {}
        * * Unchecked remove
        */
+      
+      // this query runs when checkbox is clicked and 'checked'
+      if (this.curCategory === 'album' && curValue.includes('album')) {
+        this.queryUrl = `/?${this.curCategory}=${curValue.split('.')[1]}`;
+      }
 
 
     // If section === song, query songs based on what's checked.
@@ -103,10 +113,15 @@ class SHOP {
        * Add to the 'selected' & 'list' {}
        * Add checked songs to the DOM
        * Unchecked remove
-       */
-
+      //  */
+      
       if (this.curCategory === 'song') {
         this.queryUrl = `/?category=${this.curCategory}&album=${curValue.split('.')[1]}`;
+      }
+      
+      // this query runs when checkbox is clicked and 'checked'
+      if (this.curCategory === 'song' && curValue.includes('song')) {
+        this.queryUrl = `/?${this.curCategory}=${curValue.split('.')[1]}`;
       }
 
     // if section === cloth, query based on selected and add them to the obj/arr which will insert inputs
@@ -133,17 +148,27 @@ class SHOP {
        */
     //
 
-    // Build URL
-    if (this.queryUrl) {
-      this.currentQuery = await new Promise((resolve, reject) => {
-        const fetchData = fetch(this.queryUrl);
-        
-        return resolve(fetchData);
-      })
-        .then(data => data.json());
-    } else {
-      this.currentQuery = {Error: 'Not valid query'};
+    // this query runs when checkbox is clicked and 'checked'
+    if (this.curCategory === 'other' && curValue.includes('other')) {
+      this.queryUrl = `/?${this.curCategory}=${curValue.split('.')[1]}`;
     }
+
+      // console.log('BUILD QUERY URL', this.queryUrl);
+    // Build URL
+    this.currentQuery = await new Promise((resolve, reject) => {
+      const fetchData = fetch(this.queryUrl);
+      if (fetchData) {
+        // console.log('FETCH DATA', fetchData);
+        return resolve(fetchData);
+      }
+    })
+      .then(data => data.json())
+      .catch(e => {});
+    // if (this.queryUrl) {
+    // } 
+    // else {
+    //   this.currentQuery = { Error: 'Not valid query' };
+    // }
 
     // const returnPromise = await this.currentQuery;
       // .then((dbData) => {
@@ -168,29 +193,29 @@ class SHOP {
     if (!this.list[this.curCategory][curValue]) {
       this.list[this.curCategory][curValue] = this.currentQuery;
     } else {
+      // If album gets deleted, songs assosiated to this album need to be removed
+      if (this.list[this.curCategory]) {
+
+        Object.entries(this.list[this.curCategory])
+        .filter(ctgy => ctgy[0].split('.')[0] === this.curCategory)
+        .forEach(el => {
+          this.deleteItem = el;
+          // console.log('Song.albumId', this.deleteItem.albumId);  
+          // console.log('Song.albumId = curValue', this.deleteItem[1].albumId === Number(curValue.split('.')[1]));  
+          // console.log('To', this.list[this.curCategory]);
+          // delete this.list[this.curCategory][this.deleteItem];
+          // console.log('Moze ten', el);
+
+          if (this.deleteItem[1].albumId === Number(curValue.split('.')[1])) {
+            delete this.list[this.curCategory][this.deleteItem[0]];
+          }
+
+        });
+      }
       delete this.list[this.curCategory][curValue];
     }
-      // No DB query when unchecking
-      // this.currentQuery = new Promise((resolve, reject) => {
-      //   return reject([]);
-      // });`
-        // .then(album => album.json());;
-      // return this.currentQuery;
-    // }
-    // Build query URL
 
-
-    // if ( this.curCategory !== 'album') {
-    //   console.log('Nie album');
-    // }
-    
-    // .catch(error => console.error(error));
-    return this.currentQuery;
-    // if (!category.trim() === 'album') {
-
-    // }
-
-
+    return this.list;
   }
 
   // getCurrentSelection() {

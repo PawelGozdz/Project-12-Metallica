@@ -48,7 +48,7 @@ class Popular {
   }
 
   buildRandomDisplay(arrNumbers, subjectType) {
-    let elementHMTL = ''
+    let elementHMTL = '';
     arrNumbers.forEach((number, index) => {
       elementHMTL += `
         <div class="col-6 col-sm-3">
